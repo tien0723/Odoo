@@ -20,47 +20,150 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
+        <!-- Self Hosted URL Input -->
+        <LinearLayout
+            android:id="@+id/layoutSelfHosted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nhap duong dan"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="visible">
 
-        <EditText
-            android:id="@+id/edtURL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_action_universe"
+                app:tint="#000" />
 
-        <TextView
+            <EditText
+                android:id="@+id/edtSelfHostedURL"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:hint="Your selt-hosted URL"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColorHint="#000" />
+
+            <ProgressBar
+                android:id="@+id/serverURLCheckProgress"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imgValidURL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_baseline_done_24"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <!-- Username Input -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nhap tai khoan"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <EditText
-            android:id="@+id/edtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_action_user"
+                app:tint="#000" />
 
-        <TextView
+            <EditText
+                android:id="@+id/edtUserName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="#ffffff"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:hint="UserNameOrEmail"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColorHint="#000" />
+        </LinearLayout>
+
+
+        <!-- Username Input -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nhap Mat khau"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <EditText
-            android:id="@+id/edtPassword"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_action_lock"
+                app:tint="#000" />
+
+            <EditText
+                android:id="@+id/edtPassWord"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="#ffffff"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:hint="Password"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColorHint="#000" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/layoutBorderDB"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="1dp"
+            android:background="#000"
+            android:visibility="gone" />
 
-        <Spinner
-            android:id="@+id/spnNameDataBase"
+
+        <LinearLayout
+            android:id="@+id/layoutDatabase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:minHeight="48dp"
-            android:entries="@array/data"
-            />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_action_database"
+                app:tint="#000" />
+
+            <Spinner
+                android:id="@+id/spinnerDatabaseList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
 
 
         <Button
