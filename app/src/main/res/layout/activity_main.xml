@@ -57,7 +57,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/imgValidURL"
@@ -125,6 +125,7 @@
                 android:background="#ffffff"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_vertical"
+                android:inputType="textPassword"
                 android:hint="Password"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
