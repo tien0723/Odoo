@@ -17,4 +17,11 @@
     <string name="image_checkurl">image_checkUrl</string>
     <string name="image_database">image_database</string>
     <string name="image_password">image_password</string>
+    <string name="menu">menu</string>
+    <string name="profile">Profile</string>
+    <string name="company">Company</string>
+    <string name="messages">Messages</string>
+    <string name="others">Others</string>
+    <string name="support">Support</string>
+    <string name="setting">Setting</string>
 </resources>
