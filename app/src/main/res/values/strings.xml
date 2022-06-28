@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">My Odoo</string>
+    <string name="usernameoremail">UserNameOrEmail</string>
+    <string name="your_selt_hosted_url">Your selt-hosted URL</string>
+    <string name="my_odoo">My Odoo</string>
+    <string name="password">Password</string>
+    <string name="dang_nhap">Dang nhap</string>
+    <string name="contacts">Contacts</string>
+    <string name="ho_ten">Ho ten</string>
+    <string name="dia_chi">Dia chi</string>
+    <string name="email">Email</string>
+    <string name="sans_selt_hosted_url">sans-serif-light</string>
+    <string name="sans_serif_light">sans-serif-light</string>
+    <string name="image_contact">image_contact</string>
+    <string name="image_url">image_url</string>
+    <string name="image_username">image_username</string>
+    <string name="image_checkurl">image_checkUrl</string>
+    <string name="image_database">image_database</string>
+    <string name="image_password">image_password</string>
 </resources>

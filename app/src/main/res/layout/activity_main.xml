@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="@dimen/size_30sp"
         android:textColor="@color/purple_200"
         android:gravity="center"
-        android:layout_marginBottom="70dp"
-        android:text="My Odoo"/>
+        android:layout_marginBottom="@dimen/padding_70dp"
+        android:text="@string/my_odoo"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,44 +27,48 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="@dimen/padding_10dp"
             android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="@dimen/padding_5dp"
                 android:src="@drawable/ic_action_universe"
-                app:tint="#000" />
+                app:tint="@color/black_odoo"
+                android:contentDescription="@string/image_url"/>
 
             <EditText
+                android:inputType="textUri"
+                android:autofillHints="url"
                 android:id="@+id/edtSelfHostedURL"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:background="#ffffff"
-                android:fontFamily="sans-serif-light"
+                android:background="@color/while_odoo"
+                android:fontFamily="@string/sans_selt_hosted_url"
                 android:gravity="center_vertical"
-                android:hint="Your selt-hosted URL"
+                android:hint="@string/your_selt_hosted_url"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColorHint="#000" />
+                android:textColorHint="@color/black_odoo" />
 
             <ProgressBar
                 android:id="@+id/serverURLCheckProgress"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/padding_24dp"
+                android:layout_height="@dimen/padding_24dp"
                 android:layout_gravity="center_vertical"
                 android:visibility="visible" />
 
             <ImageView
+                android:contentDescription="@string/image_checkurl"
                 android:id="@+id/imgValidURL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="@dimen/padding_5dp"
                 android:src="@drawable/ic_baseline_done_24"
                 android:visibility="gone" />
         </LinearLayout>
@@ -76,28 +80,31 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="@dimen/padding_10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="@dimen/padding_5dp"
                 android:src="@drawable/ic_action_user"
-                app:tint="#000" />
+                app:tint="@color/black_odoo"
+                android:contentDescription="@string/image_username"/>
 
             <EditText
+                android:autofillHints="username"
+                android:inputType="text"
                 android:id="@+id/edtUserName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="#ffffff"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="@string/sans_serif_light"
                 android:gravity="center_vertical"
-                android:hint="UserNameOrEmail"
+                android:hint="@string/usernameoremail"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColorHint="#000" />
+                android:textColorHint="@color/black_odoo" />
         </LinearLayout>
 
 
@@ -107,36 +114,38 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="@dimen/padding_10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="@dimen/padding_5dp"
                 android:src="@drawable/ic_action_lock"
-                app:tint="#000" />
+                app:tint="@color/black_odoo"
+                android:contentDescription="@string/image_password"/>
 
             <EditText
+                android:autofillHints="password"
                 android:id="@+id/edtPassWord"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:background="#ffffff"
-                android:fontFamily="sans-serif-light"
+                android:background="@color/while_odoo"
+                android:fontFamily="@string/sans_serif_light"
                 android:gravity="center_vertical"
                 android:inputType="textPassword"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColorHint="#000" />
+                android:textColorHint="@color/black_odoo" />
         </LinearLayout>
 
         <View
             android:id="@+id/layoutBorderDB"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000"
+            android:layout_height="@dimen/padding_1dp"
+            android:background="@color/black_odoo"
             android:visibility="gone" />
 
 
@@ -146,16 +155,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="@dimen/padding_10dp"
             android:visibility="gone">
 
             <ImageView
+                android:contentDescription="@string/image_database"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="@dimen/padding_5dp"
                 android:src="@drawable/ic_action_database"
-                app:tint="#000" />
+                app:tint="@color/black_odoo" />
 
             <Spinner
                 android:id="@+id/spinnerDatabaseList"
@@ -172,8 +182,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#1AD621"
-            android:text="Dang nhap" />
+            android:backgroundTint="@color/green"
+            android:text="@string/dang_nhap" />
     </LinearLayout>
 
 
