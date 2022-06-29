@@ -5,9 +5,15 @@
       <map>
         <entry key="..\:/Users/ACER/AndroidStudioProjects/MyOdoo/app/src/main/res/layout/activity_main.xml" value="0.2359375" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/MyOdoo/app/src/main/res/layout/item_contact_layout.xml" value="0.25" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_contacts_24.xml" value="0.188" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/activity_login.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/activity_main.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_contact.xml" value="0.125" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_messages.xml" value="0.1503623188405797" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_setting.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/item_contact_layout.xml" value="0.25" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/menu_navigation_layout.xml" value="0.1546875" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/navigation_home.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/menu/menu_navigation.xml" value="0.24895833333333334" />
       </map>

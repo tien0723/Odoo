@@ -26,7 +26,7 @@ import tdc.edu.vn.myodoo.DataBase.DataBaseLoginOdoo;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     //khai bao bien
     EditText edtURL, edtName, edtPass;
     Spinner spnDataBase;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         //handle threah
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         int uid = dataBaseLoginOdoo.Uid(url, userName, password, db);
         Log.d("TAG", "login: " + uid);
         if (uid > 0) {
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt("uid", uid);
             bundle.putString("url", url);
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
         } else {
-            Toast.makeText(MainActivity.this, "Loi sai login", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Loi sai login", Toast.LENGTH_LONG).show();
         }
     }
 }

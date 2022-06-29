@@ -21,7 +21,17 @@
     <string name="profile">Profile</string>
     <string name="company">Company</string>
     <string name="messages">Messages</string>
-    <string name="others">Others</string>
-    <string name="support">Support</string>
-    <string name="setting">Setting</string>
+    <string name="settings">Settings</string>
+    <string name="expenses">Expenses</string>
+    <string name="stock">Stock</string>
+    <string name="notes">Notes</string>
+    <string name="sales">Sales</string>
+    <string name="dashboards">Dashboards</string>
+    <string name="finance">Finance</string>
+    <string name="help_feedback"><![CDATA[Help & feedback]]></string>
+    <string name="timesheet">TIMESHEET</string>
+    <string name="timesheets">Timesheets</string>
+    <string name="activities">Activities</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

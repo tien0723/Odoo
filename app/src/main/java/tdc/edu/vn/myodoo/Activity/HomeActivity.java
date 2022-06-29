@@ -1,73 +1,101 @@
 package tdc.edu.vn.myodoo.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.view.MenuItem;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
-
-import org.apache.xmlrpc.client.XmlRpcClient;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import tdc.edu.vn.myodoo.Adapter.AdapterContact;
-import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
-import tdc.edu.vn.myodoo.DataBase.DataBaseLoginOdoo;
-import tdc.edu.vn.myodoo.Model.Contact;
+import tdc.edu.vn.myodoo.Fragment.ContactFragment;
+import tdc.edu.vn.myodoo.Fragment.MessegesFragment;
+import tdc.edu.vn.myodoo.Fragment.SettingFragment;
 import tdc.edu.vn.myodoo.R;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
-    List<Contact> contacts = new ArrayList<>();
-    ListView lvContact;
+    DrawerLayout drawerLayout;
+    //tao so thu tu cho fragment
+    private static final int FRAGMENT_MESSAGES = 0;
+    private static final int FRAGMENT_CONTACT = 1;
+    private static final int FRAGMENT_SETTING = 2;
+    //tao bien so sanh de lay fragment
+    private int mCurrentFragment = FRAGMENT_CONTACT;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //handle threah
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
-        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
-        ImageView imgMenu= findViewById(R.id.imgMenu);
-        imgMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        drawerLayout = findViewById(R.id.drawerLayout);
         NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.setItemIconTintList(null);
-        setControl();
-        listContact();
+
+        Toolbar toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        replaceFragment(new ContactFragment());
+        navigationView.getMenu().findItem(R.id.menuContact).setChecked(true);
     }
 
-    private void listContact() {
-        Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
-        String db = intent.getStringExtra("db");
-        String password = intent.getStringExtra("password");
-        int uid = intent.getIntExtra("uid",0);
-        contacts = dataBaseHomeOdoo.listContact(url,db,password,uid);
-        lvContact.setAdapter(new AdapterContact(HomeActivity.this, R.layout.item_contact_layout, contacts));
-    }
-        private void setControl () {
-            lvContact = findViewById(R.id.lvContact);
+
+    //xu ly thanh navigation de chon fragment
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuMessages:
+                if (mCurrentFragment != FRAGMENT_MESSAGES) {
+                    replaceFragment(new MessegesFragment());
+                    mCurrentFragment = FRAGMENT_MESSAGES;
+                }
+                break;
+            case R.id.menuContact:
+                if (mCurrentFragment != FRAGMENT_CONTACT) {
+                    replaceFragment(new ContactFragment());
+                    mCurrentFragment = FRAGMENT_CONTACT;
+                }
+                break;
+
+            case R.id.menuSetting:
+                if (mCurrentFragment != FRAGMENT_SETTING) {
+                    replaceFragment(new SettingFragment());
+                    mCurrentFragment = FRAGMENT_SETTING;
+                }
+                break;
+
+            case R.id.menuSupport:
+                break;
+
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
+    //
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
 
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //lay id layout fragment
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.commit();
+    }
 }

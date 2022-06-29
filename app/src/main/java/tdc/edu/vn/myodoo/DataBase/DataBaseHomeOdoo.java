@@ -18,10 +18,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tdc.edu.vn.myodoo.Model.Contact;
 
 public class DataBaseHomeOdoo {
+    //khai bao thu vien xml
+    final XmlRpcClientConfigImpl common_config = new XmlRpcClientConfigImpl();
+    final XmlRpcClient client = new XmlRpcClient();
     DataBaseLoginOdoo dataBaseLoginOdoo = new DataBaseLoginOdoo();
     // Khởi tạo Moshi adapter để biến đổi json sang model java (ở đây là Contact)
     Moshi moshi = new Moshi.Builder().build();
@@ -29,11 +33,42 @@ public class DataBaseHomeOdoo {
     JsonAdapter<List<Contact>> jsonAdapter = moshi.adapter(usersType);
 
     //lay ds contact
-    public List<Contact> listContact(String url,String db,String password, int uid) {
+//    public List<Contact> listContact(String url,String db,String password, int uid) {
+//        String serverUrl = dataBaseLoginOdoo.createServerURL(url);
+//        Object f = null;
+//        //lay model
+//         XmlRpcClient models = new XmlRpcClient() {{
+//            setConfig(new XmlRpcClientConfigImpl() {{
+//                try {
+//                    setServerURL(new URL(String.format("%s/xmlrpc/2/object", serverUrl)));
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                }
+//            }});
+//        }};
+//        //lay du lieu trong model
+//        try {
+//            f = asList((Object[]) models.execute("execute_kw", asList(
+//                    db, uid, password,
+//                    "res.partner", "search_read",
+//                    emptyList(),
+//                    new HashMap() {{
+//                        put("fields", asList("image_128", "name", "city", "email", "id"));
+//                    }}
+//            )));
+//        } catch (XmlRpcException ex) {
+//            ex.printStackTrace();
+//        }
+//        //chuyen kieu object thanh contact
+//        final List<Contact> contacts = jsonAdapter.fromJsonValue(f);
+//        Log.d("TAG", "contactf: " + contacts);
+//        return contacts;
+//    }
+    public Object listContact(String url,String db, int user_id, String password, String objectModel) {
         String serverUrl = dataBaseLoginOdoo.createServerURL(url);
-        Object f = null;
+       Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city", "email", "id")); }};
         //lay model
-         XmlRpcClient models = new XmlRpcClient() {{
+        XmlRpcClient models = new XmlRpcClient() {{
             setConfig(new XmlRpcClientConfigImpl() {{
                 try {
                     setServerURL(new URL(String.format("%s/xmlrpc/2/object", serverUrl)));
@@ -42,22 +77,12 @@ public class DataBaseHomeOdoo {
                 }
             }});
         }};
-        //lay du lieu trong model
+        Object result = null;
         try {
-            f = asList((Object[]) models.execute("execute_kw", asList(
-                    db, uid, password,
-                    "res.partner", "search_read",
-                    emptyList(),
-                    new HashMap() {{
-                        put("fields", asList("image_128", "name", "city", "email", "id"));
-                    }}
-            )));
-        } catch (XmlRpcException ex) {
-            ex.printStackTrace();
+            result = models.execute("execute_kw", asList(db, user_id, password, objectModel, "search_read",emptyList(), fields));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
         }
-        //chuyen kieu object thanh contact
-        final List<Contact> contacts = jsonAdapter.fromJsonValue(f);
-        Log.d("TAG", "contactf: " + contacts);
-        return contacts;
+        return result;
     }
 }

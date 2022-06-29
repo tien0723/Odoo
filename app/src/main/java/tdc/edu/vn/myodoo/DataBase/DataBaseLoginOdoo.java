@@ -12,6 +12,7 @@ import com.squareup.moshi.Types;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
+import org.apache.xmlrpc.client.XmlRpcClientConfig;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 import java.lang.reflect.Type;
@@ -32,17 +33,33 @@ public class DataBaseLoginOdoo {
     final XmlRpcClientConfigImpl common_config = new XmlRpcClientConfigImpl();
     final XmlRpcClient client = new XmlRpcClient();
 
-    //lấy user id đăng nhập
-    public int Uid(String url, String userName, String password, String db) {
+    public DataBaseLoginOdoo() {
+    }
+
+    public DataBaseLoginOdoo(String url, String path) {
         String serverURL = createServerURL(url);
-        int uid = 0;
         try {
-            common_config.setServerURL(new URL(String.format("%s/xmlrpc/2/common", serverURL)));
+            common_config.setServerURL(new URL(String.format("%s/xmlrpc/2/"+path, serverURL)));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    //lấy user id đăng nhập
+    public int Uid(String url, String userName, String password, String db) {
+        int uid = 0;
+//        String serverURL = createServerURL(url);
+//
+//        try {
+//            common_config.setServerURL(new URL(String.format("%s/xmlrpc/2/common", serverURL)));
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+        DataBaseLoginOdoo dataBaseLoginOdoo = new DataBaseLoginOdoo(url,"common");
         try {
-            uid = (int) client.execute(common_config, "authenticate", asList(db, userName, password, emptyMap()));
+            uid = (int) client.execute((XmlRpcClientConfig) dataBaseLoginOdoo, "authenticate", asList(db, userName, password, emptyMap()));
+            //login
+            //Object uid = client.execute(common_config,"login",asList(db,username,password));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +77,8 @@ public class DataBaseLoginOdoo {
         }
         try {
             h = (Object[]) client.execute(common_config, "list", emptyList());
+            //danh sach database
+            //Object object = client.execute(common_config,"list", new Object[]{});
             //chuyen mang oject thanh mang string
             String common[] = new String[h.length];
 

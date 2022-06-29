@@ -1,31 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuProfile"
-          android:title="@string/profile"
-          android:icon="@drawable/ic_baseline_profile">
-    </item>
-    <item android:id="@+id/menuContact"
-        android:title="@string/contacts"
-        android:icon="@drawable/ic_baseline_contacts_24">
-    </item>
-    <item android:id="@+id/menuCompany"
-        android:title="@string/company"
-        android:icon="@drawable/ic_action_company">
-    </item>
-    <item android:title="@string/others">
-        <menu>
-            <item android:id="@+id/menuMessages"
-                android:title="@string/messages"
-                android:icon="@drawable/ic_baseline_message_24">
-            </item>
-            <item android:id="@+id/menuSetting"
-                android:title="@string/setting"
-                android:icon="@drawable/ic_baseline_settings_24">
-            </item>
-            <item android:id="@+id/menuSupport"
-                android:title="@string/support"
-                android:icon="@drawable/ic_baseline_support_24">
-            </item>
-        </menu>
-    </item>
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menuMessages"
+            android:title="@string/messages"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+       <item android:id="@+id/menuContact"
+           android:title="@string/contacts"
+           android:icon="@drawable/ic_baseline_contacts_24">
+       </item>
+        <item android:id="@+id/menuExpenses"
+            android:title="@string/expenses"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+        <item android:id="@+id/menuStock"
+            android:title="@string/stock"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+        <item android:id="@+id/menuNotes"
+            android:title="@string/notes"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+        <item android:id="@+id/menuSales"
+            android:title="@string/sales"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+        <item android:id="@+id/menuDashboards"
+            android:title="@string/dashboards"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+        <item android:id="@+id/menuFinance"
+            android:title="@string/finance"
+            android:icon="@drawable/ic_baseline_message_24">
+        </item>
+   </group>
+    <group android:checkableBehavior="single">
+        <item android:title="@string/timesheet">
+            <menu>
+
+                <item android:id="@+id/menuTimesheets"
+                    android:title="@string/timesheets"
+                    android:icon="@drawable/ic_baseline_settings_24">
+                </item>
+                <item android:id="@+id/menuActivities"
+                    android:title="@string/activities"
+                    android:icon="@drawable/ic_baseline_support_24">
+                </item>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:title="@string/settings">
+            <menu>
+
+                <item android:id="@+id/menuSetting"
+                    android:title="@string/settings"
+                    android:icon="@drawable/ic_baseline_settings_24">
+                </item>
+                <item android:id="@+id/menuSupport"
+                    android:title="@string/help_feedback"
+                    android:icon="@drawable/ic_baseline_support_24">
+                </item>
+                <item android:id="@+id/menuFeedback"
+                    android:title="Feedback"
+                    android:icon="@drawable/ic_baseline_support_24">
+                </item>
+            </menu>
+        </item>
+    </group>
+
 </menu>
