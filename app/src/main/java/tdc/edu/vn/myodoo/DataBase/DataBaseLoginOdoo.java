@@ -32,32 +32,18 @@ public class DataBaseLoginOdoo {
     //khai bao thu vien xml
     final XmlRpcClientConfigImpl common_config = new XmlRpcClientConfigImpl();
     final XmlRpcClient client = new XmlRpcClient();
-
-    public DataBaseLoginOdoo() {
-    }
-
-    public DataBaseLoginOdoo(String url, String path) {
-        String serverURL = createServerURL(url);
-        try {
-            common_config.setServerURL(new URL(String.format("%s/xmlrpc/2/"+path, serverURL)));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
     //lấy user id đăng nhập
     public int Uid(String url, String userName, String password, String db) {
         int uid = 0;
-//        String serverURL = createServerURL(url);
-//
-//        try {
-//            common_config.setServerURL(new URL(String.format("%s/xmlrpc/2/common", serverURL)));
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-        DataBaseLoginOdoo dataBaseLoginOdoo = new DataBaseLoginOdoo(url,"common");
+        String serverURL = createServerURL(url);
+
         try {
-            uid = (int) client.execute((XmlRpcClientConfig) dataBaseLoginOdoo, "authenticate", asList(db, userName, password, emptyMap()));
+            common_config.setServerURL(new URL(String.format("%s/xmlrpc/2/common", serverURL)));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            uid = (int) client.execute(common_config, "authenticate", asList(db, userName, password, emptyMap()));
             //login
             //Object uid = client.execute(common_config,"login",asList(db,username,password));
         } catch (Exception e) {

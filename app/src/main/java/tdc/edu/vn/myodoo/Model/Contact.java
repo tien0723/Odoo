@@ -1,21 +1,10 @@
 package tdc.edu.vn.myodoo.Model;
 
 public class Contact {
-    Object  city,name,email,image_128;
-    String id;
+    String  city,name,email,image_128;
+    int id;
 
-    public Contact() {
-    }
-
-    public Object getImage_128() {
-        return image_128;
-    }
-
-    public void setImage_128(Object image_128) {
-        this.image_128 = image_128;
-    }
-
-    public Contact(Object city, Object name, Object email, Object image_128, String id) {
+    public Contact(String city, String name, String email, String image_128, int id) {
         this.city = city;
         this.name = name;
         this.email = email;
@@ -23,28 +12,47 @@ public class Contact {
         this.id = id;
     }
 
-    public Object getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(Object city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public Object getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Object name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Object getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Object email) {
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getImage_128() {
+        return image_128;
+    }
+
+    public void setImage_128(String image_128) {
+        this.image_128 = image_128;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Contact() {
     }
 
 
@@ -57,13 +65,5 @@ public class Contact {
                 ", image_1920=" + image_128 +
                 ", id=" + id +
                 '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

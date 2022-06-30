@@ -26,22 +26,21 @@ public class AdapterContact extends ArrayAdapter {
 
     public AdapterContact(@NonNull Context context, int resource, List<Contact> data) {
         super(context, resource, data);
-        this.context=context;
-        this.resource=resource;
-        this.data=data;
+        this.context = context;
+        this.resource = resource;
+        this.data = data;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(resource,null);
+        convertView = LayoutInflater.from(context).inflate(resource, null);
         Contact contact = data.get(position);
         ImageView imgConTact = convertView.findViewById(R.id.imgContact);
-        String base_url = "https://android.t4erp.cf";
-        // Log.d("TAG", "getView: "+contact.getImage_128());
-        TextView tvTen= convertView.findViewById(R.id.tvTen);
-        TextView tvDiaChi= convertView.findViewById(R.id.tvDiaChi);
-        TextView tvEmail= convertView.findViewById(R.id.tvEmail);
+
+        TextView tvTen = convertView.findViewById(R.id.tvTen);
+        TextView tvDiaChi = convertView.findViewById(R.id.tvDiaChi);
+        TextView tvEmail = convertView.findViewById(R.id.tvEmail);
 
         //lay anh bang picasso
 //        String image_url_1920 =  base_url + "/web/image?" + "model=res.partner&id=" + contact.getId() + "&field=image_128&unique=06072022153053";
@@ -52,12 +51,15 @@ public class AdapterContact extends ArrayAdapter {
 //                .fit()
 //                .into(imgConTact);
 
+
         //lay anh bang bitmap
-        Bitmap bitmap = BitmapUtils.getBitmapImage(context, String.valueOf(contact.getImage_128()));
+        //lay anh bang bitmap
+        Bitmap bitmap = BitmapUtils.getBitmapImage(context, contact.getImage_128());
         imgConTact.setImageBitmap(bitmap);
-        tvTen.setText((String) contact.getName());
-        tvDiaChi.setText((String) contact.getEmail());
-        tvEmail.setText(contact.getId());
+
+        tvTen.setText( contact.getName());
+        tvDiaChi.setText( contact.getEmail());
+        tvEmail.setText(String.valueOf(contact.getId()));
         return convertView;
     }
 }

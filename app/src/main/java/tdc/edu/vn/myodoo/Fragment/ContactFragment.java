@@ -64,7 +64,7 @@ public class ContactFragment extends Fragment {
                 String city= OdooUtil.getString((Map<String, Object>) object, "city");
                 String email = OdooUtil.getString((Map<String, Object>) object, "email");
                 int id= OdooUtil.getInteger((Map<String, Object>) object, "id");
-                Contact contact = new Contact(city,name,email,image,String.valueOf(id));
+                Contact contact = new Contact(city,name,email,image,id);
                 contacts.add(contact);
             }
         }
