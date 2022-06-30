@@ -6,10 +6,12 @@
     android:gravity="bottom"
     android:background="@color/purple_500">
     <ImageView
+        android:id="@+id/imgUserNavigation"
         android:layout_width="@dimen/padding_80dp"
         android:layout_height="@dimen/padding_80dp"
         android:src="@mipmap/ic_launcher"/>
     <TextView
+        android:id="@+id/tvNameNavigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User name"
@@ -17,6 +19,7 @@
         android:layout_marginTop="@dimen/padding_8dp"
         android:textColor="@color/while_odoo"/>
     <TextView
+        android:id="@+id/tvEmailNavigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"

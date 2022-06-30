@@ -2,6 +2,7 @@ package tdc.edu.vn.myodoo.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class AdapterContact extends ArrayAdapter {
         //lay anh bang bitmap
         Bitmap bitmap = BitmapUtils.getBitmapImage(context, contact.getImage_128());
         imgConTact.setImageBitmap(bitmap);
-
+        Log.d("TAG", "getView: "+contact.getImage_128());
         tvTen.setText( contact.getName());
         tvDiaChi.setText( contact.getEmail());
         tvEmail.setText(String.valueOf(contact.getId()));

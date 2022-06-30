@@ -25,8 +25,8 @@
         </activity>
         <activity android:name=".Activity.HomeActivity"
             android:exported="false">
-
         </activity>
+        <activity android:name=".Activity.DetailContactActivity" android:exported="false"/>
     </application>
 
 </manifest>

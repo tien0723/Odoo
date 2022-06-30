@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tdc.edu.vn.myodoo.Activity.DetailContactActivity;
 import tdc.edu.vn.myodoo.Activity.HomeActivity;
 import tdc.edu.vn.myodoo.Adapter.AdapterContact;
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
@@ -69,6 +71,14 @@ public class ContactFragment extends Fragment {
             }
         }
         lvContact.setAdapter(new AdapterContact(getContext(), R.layout.item_contact_layout, contacts));
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent1 = new Intent(getContext(), DetailContactActivity.class);
+                intent1.putExtra("username",contacts.get(i).getName());
+                startActivity(intent1);
+            }
+        });
         return  view;
     }
 }

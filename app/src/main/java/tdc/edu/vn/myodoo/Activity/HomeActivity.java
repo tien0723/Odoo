@@ -1,7 +1,10 @@
 package tdc.edu.vn.myodoo.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -35,7 +38,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         drawerLayout = findViewById(R.id.drawerLayout);
         NavigationView navigationView = findViewById(R.id.navigationView);
-
+        TextView tvName = navigationView.getHeaderView(0).findViewById(R.id.tvNameNavigation);
+        TextView tvEmail = navigationView.getHeaderView(0).findViewById(R.id.tvEmailNavigation);
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("username");
+        tvName.setText(name);
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,
@@ -52,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //xu ly thanh navigation de chon fragment
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.menuMessages:
                 if (mCurrentFragment != FRAGMENT_MESSAGES) {

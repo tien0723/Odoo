@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/imageBackgroundUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/user_defaul">
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UserName"
+                android:layout_marginTop="180dp"
+                android:textSize="@dimen/size_50sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Website" />
+
+            <EditText
+                android:id="@+id/edtWebsite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="website" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="abc@example.com" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone" />
+
+            <EditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="(+84)928327729" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile" />
+
+            <EditText
+                android:id="@+id/edtMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="mobile" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Country" />
+
+            <EditText
+                android:id="@+id/edtCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="United States" />
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Internal Note" />
+
+            <EditText
+                android:id="@+id/edtInternalNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Internal note" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
+
+
+</LinearLayout>
