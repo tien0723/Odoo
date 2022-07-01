@@ -2,6 +2,7 @@ package tdc.edu.vn.myodoo.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +17,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Map;
+
+import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Fragment.ContactFragment;
 import tdc.edu.vn.myodoo.Fragment.MessegesFragment;
 import tdc.edu.vn.myodoo.Fragment.SettingFragment;
+import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();;
     DrawerLayout drawerLayout;
     //tao so thu tu cho fragment
     private static final int FRAGMENT_MESSAGES = 0;
@@ -40,9 +47,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.navigationView);
         TextView tvName = navigationView.getHeaderView(0).findViewById(R.id.tvNameNavigation);
         TextView tvEmail = navigationView.getHeaderView(0).findViewById(R.id.tvEmailNavigation);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("username");
-        tvName.setText(name);
+        ImageView imageView = navigationView.getHeaderView(0).findViewById(R.id.imgUserNavigation);
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,
@@ -53,6 +58,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         replaceFragment(new ContactFragment());
         navigationView.getMenu().findItem(R.id.menuContact).setChecked(true);
+
+
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
+        String db = intent.getStringExtra("db");
+        String password = intent.getStringExtra("password");
+        int uid = intent.getIntExtra("uid",0);
+        Object[] result = (Object[]) dataBaseHomeOdoo.InfoUser(url,db,password,uid);
+        if(result.length >0){
+            for (Object object: result){
+                String name = OdooUtil.getString((Map<String, Object>) object,"name");
+                String email = OdooUtil.getString((Map<String, Object>) object,"email");
+                String image = OdooUtil.getString((Map<String, Object>) object,"image_128");
+                Log.d("TAG", "image: "+image);
+                if(image.equals("")){
+                    imageView.setImageResource(R.drawable.user_defaul);
+                }else {
+                    imageView.setImageBitmap(BitmapUtils.getBitmapImage(this,image));
+                }
+                tvEmail.setText(email);
+                tvName.setText(name);
+            }
+        }
+        //   Object[] objects = (Object[]) result;
+        Log.d("TAG", "onCreate: "+result);
     }
 
 

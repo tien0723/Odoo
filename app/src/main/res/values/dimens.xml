@@ -19,4 +19,5 @@
     <dimen name="size_16sp">16sp</dimen>
     <dimen name="padding_8dp">8dp</dimen>
     <dimen name="padding_320dp">320dp</dimen>
+    <dimen name="padding_300dp">300dp</dimen>
 </resources>

@@ -4,6 +4,7 @@ import static java.util.Collections.emptyList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,9 @@ public class ContactFragment extends Fragment {
     List<Contact> contacts = new ArrayList<>();
     ListView lvContact;
     // Khởi tạo Moshi adapter để biến đổi json sang model java (ở đây là Contact)
-    Moshi moshi = new Moshi.Builder().build();
-    Type usersType = Types.newParameterizedType(List.class, Contact.class);
-    JsonAdapter<List<Contact>> jsonAdapter = moshi.adapter(usersType);
+//    Moshi moshi = new Moshi.Builder().build();
+//    Type usersType = Types.newParameterizedType(List.class, Contact.class);
+//    JsonAdapter<List<Contact>> jsonAdapter = moshi.adapter(usersType);
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,8 +67,12 @@ public class ContactFragment extends Fragment {
                 String city= OdooUtil.getString((Map<String, Object>) object, "city");
                 String email = OdooUtil.getString((Map<String, Object>) object, "email");
                 int id= OdooUtil.getInteger((Map<String, Object>) object, "id");
-                Contact contact = new Contact(city,name,email,image,id);
+                String website_id =OdooUtil.getString((Map<String, Object>) object, "website");
+                String phone = OdooUtil.getString((Map<String, Object>) object, "phone");
+                String mobile=OdooUtil.getString((Map<String, Object>) object, "mobile");
+                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,id);
                 contacts.add(contact);
+                Log.d("TAG", "onCreateView: "+contact.getWebsite());
             }
         }
         lvContact.setAdapter(new AdapterContact(getContext(), R.layout.item_contact_layout, contacts));
@@ -76,6 +81,12 @@ public class ContactFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent1 = new Intent(getContext(), DetailContactActivity.class);
                 intent1.putExtra("username",contacts.get(i).getName());
+                intent1.putExtra("image_128",contacts.get(i).getImage_128());
+                intent1.putExtra("email",contacts.get(i).getEmail());
+                intent1.putExtra("website",contacts.get(i).getWebsite());
+                intent1.putExtra("phone",contacts.get(i).getPhone());
+                intent1.putExtra("mobile",contacts.get(i).getMobile());
+
                 startActivity(intent1);
             }
         });

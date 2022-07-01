@@ -66,7 +66,7 @@ public class DataBaseHomeOdoo {
 //    }
     public Object listContact(String url,String db, int user_id, String password, String objectModel) {
         String serverUrl = dataBaseLoginOdoo.createServerURL(url);
-       Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city", "email", "id")); }};
+       Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city", "email","website","phone","mobile")); }};
         //lay model
         XmlRpcClient models = new XmlRpcClient() {{
             setConfig(new XmlRpcClientConfigImpl() {{
@@ -84,5 +84,34 @@ public class DataBaseHomeOdoo {
             e.printStackTrace();
         }
         return result;
+    }
+    public Object InfoUser(String url,String db,String password,int uid){
+        String serverUrl = dataBaseLoginOdoo.createServerURL(url);
+        //lay model
+        XmlRpcClient models = new XmlRpcClient() {{
+            setConfig(new XmlRpcClientConfigImpl() {{
+                try {
+                    setServerURL(new URL(String.format("%s/xmlrpc/2/object", serverUrl)));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }});
+        }};
+        Object ids = null;
+        try {
+           ids =  models.execute(
+                    "execute_kw", asList(
+                            db, uid, password,
+                            "res.users", "search_read",
+                            asList(asList(
+                                    asList("id", "=", uid))),
+                            new HashMap() {{
+                                put("fields", asList("name", "email", "image_128"));
+                            }}));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
+        }
+
+        return ids;
     }
 }

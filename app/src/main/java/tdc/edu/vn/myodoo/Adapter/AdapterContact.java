@@ -53,11 +53,15 @@ public class AdapterContact extends ArrayAdapter {
 //                .into(imgConTact);
 
 
+
         //lay anh bang bitmap
-        //lay anh bang bitmap
-        Bitmap bitmap = BitmapUtils.getBitmapImage(context, contact.getImage_128());
-        imgConTact.setImageBitmap(bitmap);
-        Log.d("TAG", "getView: "+contact.getImage_128());
+        if(contact.getImage_128().equals("")){
+            imgConTact.setImageResource(R.drawable.user_defaul);
+        }
+        else {
+            Bitmap bitmap = BitmapUtils.getBitmapImage(context, contact.getImage_128());
+            imgConTact.setImageBitmap(bitmap);
+        }
         tvTen.setText( contact.getName());
         tvDiaChi.setText( contact.getEmail());
         tvEmail.setText(String.valueOf(contact.getId()));

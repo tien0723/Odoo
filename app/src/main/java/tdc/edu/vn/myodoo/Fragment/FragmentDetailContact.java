@@ -14,12 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 public class FragmentDetailContact extends Fragment {
     TextView tvUserName;
-    LinearLayout imageBackgroundUser;
-    EditText extWebsite, edtEmail, edtPhone, edtMobile, edtCountry, edtInternalNote;
+    ImageView imageBackgroundUser;
+    EditText edtWebsite, edtEmail, edtPhone, edtMobile, edtCountry, edtInternalNote;
 
     @Nullable
     @Override
@@ -28,7 +30,7 @@ public class FragmentDetailContact extends Fragment {
 
         tvUserName = view.findViewById(R.id.tvUserName);
         imageBackgroundUser = view.findViewById(R.id.imageBackgroundUser);
-        extWebsite = view.findViewById(R.id.edtWebsite);
+        edtWebsite = view.findViewById(R.id.edtWebsite);
         edtEmail = view.findViewById(R.id.edtEmail);
         edtPhone = view.findViewById(R.id.edtPhone);
         edtMobile = view.findViewById(R.id.edtMobile);
@@ -40,6 +42,16 @@ public class FragmentDetailContact extends Fragment {
     public void getInfo(){
         Intent intent = getActivity().getIntent();
         String user=intent.getStringExtra("username");
+        String email=intent.getStringExtra("email");
+        String image=intent.getStringExtra("image_128");
+        String website=intent.getStringExtra("website");
+        String phone=intent.getStringExtra("phone");
+        String mobile=intent.getStringExtra("mobile");
         tvUserName.setText(user);
+        imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(),image));
+        edtEmail.setText(email);
+        edtWebsite.setText(website);
+        edtPhone.setText(phone);
+        edtMobile.setText(mobile);
     }
 }
