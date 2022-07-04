@@ -65,6 +65,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String db = intent.getStringExtra("db");
         String password = intent.getStringExtra("password");
         int uid = intent.getIntExtra("uid",0);
+
+
         Object[] result = (Object[]) dataBaseHomeOdoo.InfoUser(url,db,password,uid);
         if(result.length >0){
             for (Object object: result){
@@ -81,7 +83,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 tvName.setText(name);
             }
         }
-        //   Object[] objects = (Object[]) result;
         Log.d("TAG", "onCreate: "+result);
     }
 

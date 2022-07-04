@@ -28,9 +28,9 @@ public class DataBaseHomeOdoo {
     final XmlRpcClient client = new XmlRpcClient();
     DataBaseLoginOdoo dataBaseLoginOdoo = new DataBaseLoginOdoo();
     // Khởi tạo Moshi adapter để biến đổi json sang model java (ở đây là Contact)
-    Moshi moshi = new Moshi.Builder().build();
-    Type usersType = Types.newParameterizedType(List.class, Contact.class);
-    JsonAdapter<List<Contact>> jsonAdapter = moshi.adapter(usersType);
+//    Moshi moshi = new Moshi.Builder().build();
+//    Type usersType = Types.newParameterizedType(List.class, Contact.class);
+//    JsonAdapter<List<Contact>> jsonAdapter = moshi.adapter(usersType);
 
     //lay ds contact
 //    public List<Contact> listContact(String url,String db,String password, int uid) {
@@ -65,18 +65,8 @@ public class DataBaseHomeOdoo {
 //        return contacts;
 //    }
     public Object listContact(String url,String db, int user_id, String password, String objectModel) {
-        String serverUrl = dataBaseLoginOdoo.createServerURL(url);
        Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city", "email","website","phone","mobile")); }};
-        //lay model
-        XmlRpcClient models = new XmlRpcClient() {{
-            setConfig(new XmlRpcClientConfigImpl() {{
-                try {
-                    setServerURL(new URL(String.format("%s/xmlrpc/2/object", serverUrl)));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }});
-        }};
+       XmlRpcClient models= Model(url);
         Object result = null;
         try {
             result = models.execute("execute_kw", asList(db, user_id, password, objectModel, "search_read",emptyList(), fields));
@@ -86,17 +76,7 @@ public class DataBaseHomeOdoo {
         return result;
     }
     public Object InfoUser(String url,String db,String password,int uid){
-        String serverUrl = dataBaseLoginOdoo.createServerURL(url);
-        //lay model
-        XmlRpcClient models = new XmlRpcClient() {{
-            setConfig(new XmlRpcClientConfigImpl() {{
-                try {
-                    setServerURL(new URL(String.format("%s/xmlrpc/2/object", serverUrl)));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }});
-        }};
+       XmlRpcClient models= Model(url);
         Object ids = null;
         try {
            ids =  models.execute(
@@ -113,5 +93,19 @@ public class DataBaseHomeOdoo {
         }
 
         return ids;
+    }
+    private XmlRpcClient Model(String url){
+        String serverUrl = dataBaseLoginOdoo.createServerURL(url);
+        //lay model
+        XmlRpcClient models = new XmlRpcClient() {{
+            setConfig(new XmlRpcClientConfigImpl() {{
+                try {
+                    setServerURL(new URL(String.format("%s/xmlrpc/2/object", serverUrl)));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }});
+        }};
+        return models;
     }
 }

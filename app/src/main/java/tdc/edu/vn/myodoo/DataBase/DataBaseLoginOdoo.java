@@ -89,6 +89,4 @@ public class DataBaseLoginOdoo {
 
         return serverURL.toString();
     }
-
-
 }
