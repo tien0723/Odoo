@@ -14,6 +14,7 @@
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1695" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1695" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_profile.xml" value="0.1695" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.112" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1695" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_baseline_support_24.xml" value="0.1695" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1695" />
@@ -22,7 +23,8 @@
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/activity_login.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/activity_main.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_contact.xml" value="0.125" />
-        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_detail_contact.xml" value="0.1765625" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_detail_contact.xml" value="0.264" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_edit_contact.xml" value="0.16" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_messages.xml" value="0.1503623188405797" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/fragment_setting.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Odoo/app/src/main/res/layout/item_contact_layout.xml" value="0.25" />

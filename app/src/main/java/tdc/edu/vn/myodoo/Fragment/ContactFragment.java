@@ -72,7 +72,7 @@ public class ContactFragment extends Fragment {
                 String mobile=OdooUtil.getString((Map<String, Object>) object, "mobile");
                 Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,id);
                 contacts.add(contact);
-                Log.d("TAG", "onCreateView: "+contact.getWebsite());
+                //Log.d("TAG", "abc: "+contact);
             }
         }
         lvContact.setAdapter(new AdapterContact(getContext(), R.layout.item_contact_layout, contacts));
@@ -86,7 +86,6 @@ public class ContactFragment extends Fragment {
                 intent1.putExtra("website",contacts.get(i).getWebsite());
                 intent1.putExtra("phone",contacts.get(i).getPhone());
                 intent1.putExtra("mobile",contacts.get(i).getMobile());
-
                 startActivity(intent1);
             }
         });

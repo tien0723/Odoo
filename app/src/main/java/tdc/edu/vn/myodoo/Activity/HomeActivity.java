@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 tvName.setText(name);
             }
         }
-        Log.d("TAG", "onCreate: "+result);
+
     }
 
 

@@ -17,10 +17,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.xmlrpc.XmlRpcException;
-
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edtPassWord);
         spnDataBase = findViewById(R.id.spinnerDatabaseList);
         btnLogin = findViewById(R.id.btnLogin);
+        edtURL.requestFocus();
         edtURL.setText("android.t4erp.cf");
         edtName.setText("TienNM.19.TDC@t4Intership.cf");
         edtPass.setText("123456aA@");

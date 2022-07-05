@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="@dimen/size_30sp"
-        android:textColor="@color/purple_200"
+        android:textColor="#3ca40f"
         android:gravity="center"
         android:layout_marginBottom="@dimen/padding_70dp"
         android:text="@string/my_odoo"/>
@@ -30,16 +30,12 @@
             android:padding="@dimen/padding_10dp"
             android:visibility="visible">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/padding_5dp"
-                android:src="@drawable/ic_action_universe"
-                app:tint="@color/black_odoo"
-                android:contentDescription="@string/image_url"/>
+
 
             <EditText
+                android:drawableLeft="@drawable/ic_action_universe"
+                android:drawableTint="#3ca40f"
+                android:drawablePadding="10dp"
                 android:inputType="textUri"
                 android:autofillHints="url"
                 android:id="@+id/edtSelfHostedURL"
@@ -82,16 +78,12 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/padding_5dp"
-                android:src="@drawable/ic_action_user"
-                app:tint="@color/black_odoo"
-                android:contentDescription="@string/image_username"/>
+
 
             <EditText
+                android:drawableLeft="@drawable/ic_action_user"
+                android:drawableTint="#3ca40f"
+                android:drawablePadding="10dp"
                 android:autofillHints="username"
                 android:inputType="text"
                 android:id="@+id/edtUserName"
@@ -116,16 +108,11 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/padding_5dp"
-                android:src="@drawable/ic_action_lock"
-                app:tint="@color/black_odoo"
-                android:contentDescription="@string/image_password"/>
 
             <EditText
+                android:drawableLeft="@drawable/ic_action_lock"
+                android:drawableTint="#3ca40f"
+                android:drawablePadding="10dp"
                 android:autofillHints="password"
                 android:id="@+id/edtPassWord"
                 android:layout_width="match_parent"
@@ -165,7 +152,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/padding_5dp"
                 android:src="@drawable/ic_action_database"
-                app:tint="@color/black_odoo" />
+                app:tint="#3ca40f" />
 
             <Spinner
                 android:id="@+id/spinnerDatabaseList"

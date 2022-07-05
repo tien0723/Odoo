@@ -49,74 +49,122 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Website" />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="@dimen/size_16sp"
+                   android:text="Website: " />
 
-            <EditText
-                android:id="@+id/edtWebsite"
+               <TextView
+                   android:id="@+id/tvWebsite"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:hint="website" />
+           </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="website" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/size_16sp"
+                    android:text="Email: " />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email" />
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="abc@example.com" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/edtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="abc@example.com" />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:textSize="@dimen/size_16sp"
+                  android:text="Phone: " />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone" />
+              <TextView
+                  android:textStyle="bold"
+                  android:id="@+id/tvPhone"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:hint="(+84)928327729" />
+          </LinearLayout>
 
-            <EditText
-                android:id="@+id/edtPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="(+84)928327729" />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="@dimen/size_16sp"
+                   android:text="Mobile: " />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mobile" />
-
-            <EditText
-                android:id="@+id/edtMobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="mobile" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Country" />
-
-            <EditText
-                android:id="@+id/edtCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="United States" />
+               <TextView
+                   android:id="@+id/tvMobile"
+                   android:textStyle="bold"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="mobile" />
+           </LinearLayout>
 
 
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
+             <TextView
+                 android:textStyle="bold"
+                 android:textSize="@dimen/size_16sp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Country: " />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Internal Note" />
+             <TextView
+                 android:textStyle="bold"
+                 android:id="@+id/tvCountry"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:hint="United States" />
+         </LinearLayout>
 
-            <EditText
-                android:id="@+id/edtInternalNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Internal note" />
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+               <TextView
+                   android:textStyle="bold"
+                   android:textSize="@dimen/size_16sp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Internal Note: " />
+
+               <TextView
+                   android:textStyle="bold"
+                   android:id="@+id/tvInternalNote"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Internal note" />
+           </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
