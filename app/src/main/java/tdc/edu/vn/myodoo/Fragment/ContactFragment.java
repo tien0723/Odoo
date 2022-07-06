@@ -48,17 +48,18 @@ public class ContactFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact,container,false);
+        //setControl
         lvContact = view.findViewById(R.id.lvContact);
+        //lay du lieu intent
         Intent intent = getActivity().getIntent();
         String url = intent.getStringExtra("url");
         String db = intent.getStringExtra("db");
         String password = intent.getStringExtra("password");
         int uid = intent.getIntExtra("uid", 0);
         String model = "res.partner";
-      //  Map<String,List> fields = new HashMap() {{put ("fields", Arrays.asList("image_128", "name", "city", "email", "id")); }};
 
+        //lay danh sach contact
         Object result = dataBaseHomeOdoo.listContact(url,db,uid,password,model);
-
         Object[] objects = (Object[]) result;
         if (objects.length > 0) {
             for (Object object : objects) {
@@ -70,11 +71,16 @@ public class ContactFragment extends Fragment {
                 String website_id =OdooUtil.getString((Map<String, Object>) object, "website");
                 String phone = OdooUtil.getString((Map<String, Object>) object, "phone");
                 String mobile=OdooUtil.getString((Map<String, Object>) object, "mobile");
-                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,id);
+                String zip =OdooUtil.getString((Map<String, Object>) object, "zip");
+                String  street =OdooUtil.getString((Map<String, Object>) object, "street");
+                String street2=OdooUtil.getString((Map<String, Object>) object, "street2");
+                Boolean is_company=OdooUtil.getBoolean((Map<String, Object>) object, "is_company");
+                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,zip,street,street2,id,is_company);
                 contacts.add(contact);
-                //Log.d("TAG", "abc: "+contact);
+               // Log.d("TAG", "abc: "+contact.getStreet()+contact.getStreet2()+contact.getIs_company()+contact.getZip());
             }
         }
+        //xu ly listview truyen du lieu sang   FragmentDetailContact
         lvContact.setAdapter(new AdapterContact(getContext(), R.layout.item_contact_layout, contacts));
         lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

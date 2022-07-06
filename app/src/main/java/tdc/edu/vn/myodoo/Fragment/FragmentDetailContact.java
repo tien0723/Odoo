@@ -7,19 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.R;
-import tdc.edu.vn.myodoo.Util.OdooUtil;
+
 
 public class FragmentDetailContact extends Fragment implements View.OnClickListener {
     ImageView imageBackgroundUser;
@@ -41,6 +37,7 @@ public class FragmentDetailContact extends Fragment implements View.OnClickListe
         getInfo();
         return view;
     }
+    //lay thong tin tu ContactFragment
     public void getInfo(){
         Intent intent = getActivity().getIntent();
         String user=intent.getStringExtra("username");
@@ -62,7 +59,7 @@ public class FragmentDetailContact extends Fragment implements View.OnClickListe
 
     }
 
-
+//Xu ly su kien click chuot
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -86,4 +83,7 @@ public class FragmentDetailContact extends Fragment implements View.OnClickListe
                 break;
         }
     }
+
+
+
 }

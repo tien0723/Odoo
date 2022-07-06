@@ -1,174 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical">
-
-       <ImageView
-           android:id="@+id/imageBackgroundUser"
-           android:layout_width="match_parent"
-           android:layout_height="@dimen/padding_300dp"
-           android:layout_alignParentTop="true"
-           android:scaleType="centerCrop"
-           android:src="@drawable/user_defaul"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent" />
-
-       <TextView
-           android:id="@+id/tvUserName"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="UserName"
-           android:textStyle="bold"
-           android:textColor="@color/black"
-           android:textSize="@dimen/size_50sp"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintVertical_bias="1.0" />
-   </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal">
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textStyle="bold"
-                   android:textSize="@dimen/size_16sp"
-                   android:text="Website: " />
 
-               <TextView
-                   android:id="@+id/tvWebsite"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:textStyle="bold"
-                   android:hint="website" />
-           </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageBackgroundUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_300dp"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_defaul"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UserName"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_50sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/size_16sp"
-                    android:text="Email: " />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:textStyle="bold"
-                    android:id="@+id/tvEmail"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="abc@example.com" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Website: "
+                        android:textSize="@dimen/size_20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvWebsite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="website"
+                        android:textSize="@dimen/size_16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email: "
+                        android:textSize="@dimen/size_20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="abc@example.com"
+                        android:textSize="@dimen/size_16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone: "
+                        android:textSize="@dimen/size_20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="(+84)928327729"
+                        android:textSize="@dimen/size_16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile: "
+                        android:textSize="@dimen/size_20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="mobile"
+                        android:textSize="@dimen/size_16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Country: "
+                        android:textSize="@dimen/size_20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="United States"
+                        android:textSize="@dimen/size_16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Internal Note: "
+                        android:textSize="@dimen/size_20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvInternalNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Internal note"
+                        android:textSize="@dimen/size_16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="@dimen/size_16sp"
-                  android:text="Phone: " />
-
-              <TextView
-                  android:textStyle="bold"
-                  android:id="@+id/tvPhone"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:hint="(+84)928327729" />
-          </LinearLayout>
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal">
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textStyle="bold"
-                   android:textSize="@dimen/size_16sp"
-                   android:text="Mobile: " />
-
-               <TextView
-                   android:id="@+id/tvMobile"
-                   android:textStyle="bold"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:hint="mobile" />
-           </LinearLayout>
-
-
-         <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="horizontal">
-             <TextView
-                 android:textStyle="bold"
-                 android:textSize="@dimen/size_16sp"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Country: " />
-
-             <TextView
-                 android:textStyle="bold"
-                 android:id="@+id/tvCountry"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:hint="United States" />
-         </LinearLayout>
-
-
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal">
-               <TextView
-                   android:textStyle="bold"
-                   android:textSize="@dimen/size_16sp"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Internal Note: " />
-
-               <TextView
-                   android:textStyle="bold"
-                   android:id="@+id/tvInternalNote"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:hint="Internal note" />
-           </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
-
-
-
+    </ScrollView>
 </LinearLayout>

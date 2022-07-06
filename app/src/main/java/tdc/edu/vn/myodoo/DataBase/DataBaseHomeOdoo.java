@@ -64,8 +64,11 @@ public class DataBaseHomeOdoo {
 //        Log.d("TAG", "contactf: " + contacts);
 //        return contacts;
 //    }
+    //Lay danh sach contact tu csdl
     public Object listContact(String url,String db, int user_id, String password, String objectModel) {
-       Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city", "email","website","phone","mobile")); }};
+       Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city",
+               "email","website","phone","mobile", "street","street2","zip","is_company")); }};
+       //InternalNote,"country_id","company_id"
        XmlRpcClient models= Model(url);
         Object result = null;
         try {
@@ -75,6 +78,7 @@ public class DataBaseHomeOdoo {
         }
         return result;
     }
+    //lay thong tin user dang nhap
     public Object InfoUser(String url,String db,String password,int uid){
        XmlRpcClient models= Model(url);
         Object ids = null;
@@ -94,6 +98,7 @@ public class DataBaseHomeOdoo {
 
         return ids;
     }
+    //lay model
     private XmlRpcClient Model(String url){
         String serverUrl = dataBaseLoginOdoo.createServerURL(url);
         //lay model

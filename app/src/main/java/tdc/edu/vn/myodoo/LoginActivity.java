@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //dang nhap
+    //dang nhap va truyen intent den class home activity, hien thi man hinh homeactivity
     public void login(String url, String userName, String password, String db) {
         int uid = dataBaseLoginOdoo.Uid(url, userName, password, db);
         Log.d("TAG", "login: " + uid);

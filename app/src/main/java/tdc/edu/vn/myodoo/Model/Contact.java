@@ -1,10 +1,45 @@
 package tdc.edu.vn.myodoo.Model;
 
 public class Contact {
-    String  city,name,email,image_128,website,phone,mobile;
+    String  city,name,email,image_128,website,phone,mobile,zip,street,street2;
     int id;
+    //"country_id","company_id"
+    Boolean is_company;
 
-    public Contact(String city, String name, String email, String image_128, String website, String phone, String mobile, int id) {
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreet2() {
+        return street2;
+    }
+
+    public void setStreet2(String street2) {
+        this.street2 = street2;
+    }
+
+    public Boolean getIs_company() {
+        return is_company;
+    }
+
+    public void setIs_company(Boolean is_company) {
+        this.is_company = is_company;
+    }
+
+    public Contact(String city, String name, String email, String image_128, String website, String phone,
+                   String mobile, String zip, String street, String street2, int id, Boolean is_company) {
         this.city = city;
         this.name = name;
         this.email = email;
@@ -12,7 +47,11 @@ public class Contact {
         this.website = website;
         this.phone = phone;
         this.mobile = mobile;
+        this.zip = zip;
+        this.street = street;
+        this.street2 = street2;
         this.id = id;
+        this.is_company = is_company;
     }
 
     @Override
@@ -22,10 +61,14 @@ public class Contact {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", image_128='" + image_128 + '\'' +
-                ", website_id='" + website + '\'' +
+                ", website='" + website + '\'' +
                 ", phone='" + phone + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", zip='" + zip + '\'' +
+                ", street='" + street + '\'' +
+                ", street2='" + street2 + '\'' +
                 ", id=" + id +
+                ", is_company=" + is_company +
                 '}';
     }
 

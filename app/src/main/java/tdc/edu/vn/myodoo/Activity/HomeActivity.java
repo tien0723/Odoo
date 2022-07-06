@@ -43,30 +43,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //setControl (anh xa du lieu)
         drawerLayout = findViewById(R.id.drawerLayout);
         NavigationView navigationView = findViewById(R.id.navigationView);
         TextView tvName = navigationView.getHeaderView(0).findViewById(R.id.tvNameNavigation);
         TextView tvEmail = navigationView.getHeaderView(0).findViewById(R.id.tvEmailNavigation);
         ImageView imageView = navigationView.getHeaderView(0).findViewById(R.id.imgUserNavigation);
         Toolbar toolbar = findViewById(R.id.toolBar);
+        //Su ly thanh toolbar
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
+        //xu ly su kien thanh navigation
         navigationView.setNavigationItemSelectedListener(this);
         replaceFragment(new ContactFragment());
         navigationView.getMenu().findItem(R.id.menuContact).setChecked(true);
 
-
+        //lay du lieu internt truyen tu login activity
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         String db = intent.getStringExtra("db");
         String password = intent.getStringExtra("password");
         int uid = intent.getIntExtra("uid",0);
 
-
+        //hien thi thong tin user
         Object[] result = (Object[]) dataBaseHomeOdoo.InfoUser(url,db,password,uid);
         if(result.length >0){
             for (Object object: result){
@@ -85,8 +87,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
-
-
     //xu ly thanh navigation de chon fragment
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -120,7 +120,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //
+    //xu ly su kien back
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
