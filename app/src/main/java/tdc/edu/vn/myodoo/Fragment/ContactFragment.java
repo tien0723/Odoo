@@ -86,12 +86,20 @@ public class ContactFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent1 = new Intent(getContext(), DetailContactActivity.class);
+
                 intent1.putExtra("username",contacts.get(i).getName());
                 intent1.putExtra("image_128",contacts.get(i).getImage_128());
                 intent1.putExtra("email",contacts.get(i).getEmail());
                 intent1.putExtra("website",contacts.get(i).getWebsite());
                 intent1.putExtra("phone",contacts.get(i).getPhone());
                 intent1.putExtra("mobile",contacts.get(i).getMobile());
+//                intent1.putExtra("zip",contacts.get(i).getMobile());
+//                intent1.putExtra("street",contacts.get(i).getMobile());
+//                intent1.putExtra("street2",contacts.get(i).getMobile());
+//                intent1.putExtra("is_company",contacts.get(i).getIs_company());
+//                intent1.putExtra("city",contacts.get(i).getCity());
+
+
                 startActivity(intent1);
             }
         });

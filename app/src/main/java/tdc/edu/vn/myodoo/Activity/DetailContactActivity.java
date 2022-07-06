@@ -19,7 +19,6 @@ import tdc.edu.vn.myodoo.R;
 
 public class DetailContactActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView imageEdit;
-
     DrawerLayout drawerLayout;
 
     @Override
@@ -34,6 +33,7 @@ public class DetailContactActivity extends AppCompatActivity implements View.OnC
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContactDetail, new FragmentDetailContact());
         transaction.commit();
+
 
     }
     //su kien click chuot thanh navbar

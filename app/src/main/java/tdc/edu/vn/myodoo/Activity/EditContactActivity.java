@@ -15,12 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Map;
+
+import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
+import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 public class EditContactActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView imageCamera;
-    TextInputEditText edtName;
     TextView tvSave,tvCancel;
+    DataBaseHomeOdoo dataBaseHomeOdoo= new DataBaseHomeOdoo();
+    TextInputEditText edtName,edtEmail,edtWebsite,edtZip,edtCity,phone,edtMobile,street,street2;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,9 @@ public class EditContactActivity extends AppCompatActivity implements View.OnCli
         imageCamera = findViewById(R.id.imageCamera);
         tvCancel = findViewById(R.id.tvCancel);
         edtName = findViewById(R.id.edtName);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtWebsite = findViewById(R.id.edtWebsite);
+        edtCity = findViewById(R.id.edtCity);
         tvSave = findViewById(R.id.tvSave);
         tvSave.setOnClickListener(this);
         tvSave.setOnClickListener(this);
@@ -42,13 +51,13 @@ public class EditContactActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.imageCamera:
-                Intent Intent3=new   Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                Intent Intent3=new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
                 startActivity(Intent3);
                 break;
             case R.id.tvSave:
-                Log.d("TAG", "name: "+edtName.getText().toString());
+                Log.d("TAG", "123: "+edtName.getText().toString());
             case R.id.tvCancel:
-                Log.d("TAG", "name: "+edtName.getText().toString());
+                Log.d("TAG", "123: "+edtName.getText().toString());
         }
     }
 }
