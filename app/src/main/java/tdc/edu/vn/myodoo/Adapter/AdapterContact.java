@@ -55,11 +55,11 @@ public class AdapterContact extends ArrayAdapter {
 
 
         //lay anh bang bitmap
-        if(contact.getImage_128().equals("")){
+        if(contact.getImage_1920().equals("")){
             imgConTact.setImageResource(R.drawable.user_defaul);
         }
         else {
-            Bitmap bitmap = BitmapUtils.getBitmapImage(context, contact.getImage_128());
+            Bitmap bitmap = BitmapUtils.getBitmapImage(context, contact.getImage_1920());
             imgConTact.setImageBitmap(bitmap);
         }
         tvTen.setText( contact.getName());

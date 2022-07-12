@@ -1,7 +1,7 @@
 package tdc.edu.vn.myodoo.Model;
 
 public class Contact {
-    String  city,name,email,image_128,website,phone,mobile,zip,street,street2;
+    String  city,name,email,image_1920,website,phone,mobile,zip,street,street2;
     int id;
     //"country_id","company_id"
     Boolean is_company;
@@ -38,12 +38,12 @@ public class Contact {
         this.is_company = is_company;
     }
 
-    public Contact(String city, String name, String email, String image_128, String website, String phone,
-                   String mobile, String zip, String street, String street2, int id, Boolean is_company) {
+    public Contact(String city, String name, String email, String image_1920, String website, String phone,
+                   String mobile, String zip, String street, String street2,int id) {
         this.city = city;
         this.name = name;
         this.email = email;
-        this.image_128 = image_128;
+        this.image_1920 = image_1920;
         this.website = website;
         this.phone = phone;
         this.mobile = mobile;
@@ -51,7 +51,7 @@ public class Contact {
         this.street = street;
         this.street2 = street2;
         this.id = id;
-        this.is_company = is_company;
+      //  this.is_company = is_company;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Contact {
                 "city='" + city + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", image_128='" + image_128 + '\'' +
+                ", image_128='" + image_1920 + '\'' +
                 ", website='" + website + '\'' +
                 ", phone='" + phone + '\'' +
                 ", mobile='" + mobile + '\'' +
@@ -120,12 +120,12 @@ public class Contact {
         this.email = email;
     }
 
-    public String getImage_128() {
-        return image_128;
+    public String getImage_1920() {
+        return image_1920;
     }
 
-    public void setImage_128(String image_128) {
-        this.image_128 = image_128;
+    public void setImage_1920(String image_1920) {
+        this.image_1920 = image_1920;
     }
 
     public int getId() {

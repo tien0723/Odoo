@@ -3,6 +3,7 @@ package tdc.edu.vn.myodoo.DataBase;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.squareup.moshi.JsonAdapter;
@@ -65,25 +66,28 @@ public class DataBaseHomeOdoo {
 //        return contacts;
 //    }
     //Lay danh sach contact tu csdl
-    public Object listContact(String url,String db, int user_id, String password, String objectModel) {
-       Map<String,Object> fields = new HashMap () {{put ("fields", asList ("image_128", "name", "city",
-               "email","website","phone","mobile", "street","street2","zip","is_company")); }};
-       //InternalNote,"country_id","company_id"
-       XmlRpcClient models= Model(url);
+    public Object listContact(String url, String db, int user_id, String password, String objectModel) {
+        Map<String, Object> fields = new HashMap() {{
+            put("fields", asList("image_128", "name", "city",
+                    "email", "website", "phone", "mobile", "street", "street2", "zip", "is_company"));
+        }};
+        //InternalNote,"country_id","company_id"
+        XmlRpcClient models = Model(url);
         Object result = null;
         try {
-            result = models.execute("execute_kw", asList(db, user_id, password, objectModel, "search_read",emptyList(), fields));
+            result = models.execute("execute_kw", asList(db, user_id, password, objectModel, "search_read", emptyList(), fields));
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return result;
     }
+
     //lay thong tin user dang nhap
-    public Object InfoUser(String url,String db,String password,int uid){
-       XmlRpcClient models= Model(url);
+    public Object InfoUser(String url, String db, String password, int uid) {
+        XmlRpcClient models = Model(url);
         Object ids = null;
         try {
-           ids =  models.execute(
+            ids = models.execute(
                     "execute_kw", asList(
                             db, uid, password,
                             "res.users", "search_read",
@@ -98,8 +102,9 @@ public class DataBaseHomeOdoo {
 
         return ids;
     }
+
     //lay model
-    private XmlRpcClient Model(String url){
+    private XmlRpcClient Model(String url) {
         String serverUrl = dataBaseLoginOdoo.createServerURL(url);
         //lay model
         XmlRpcClient models = new XmlRpcClient() {{
@@ -112,5 +117,42 @@ public class DataBaseHomeOdoo {
             }});
         }};
         return models;
+    }
+
+    //Update
+    public Object updateContact( String url,String db,String password,int uid,Contact contact) {
+        XmlRpcClient models = Model(url);
+        Object update=null;
+        try {
+            models.execute("execute_kw", asList(
+                    db, uid, password,
+                    "res.partner", "write",
+                    asList(
+                            asList(contact.getId()),
+                            new HashMap() {{
+                                put("image_1920",contact.getImage_1920());
+                                put("name", contact.getName());
+                                put("street", contact.getStreet());
+                                put("street2", contact.getStreet2());
+                                put("zip", contact.getZip());
+                                put("city", contact.getCity());
+                                put("email",contact.getEmail());
+                                put("website",contact.getWebsite());
+                                put("phone",contact.getPhone());
+                                put("mobile",contact.getMobile());
+
+                            }}
+                    )
+            ));
+            // get record name after having changed it
+            update = asList((Object[])models.execute("execute_kw", asList(
+                    db, uid, password,
+                    "res.partner", "name_get",
+                    asList(asList(contact.getId()))
+            )));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
+        }
+        return update;
     }
 }

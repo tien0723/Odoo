@@ -4,6 +4,7 @@ import static java.util.Collections.emptyList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,7 @@ public class ContactFragment extends Fragment {
         //lay danh sach contact
         Object result = dataBaseHomeOdoo.listContact(url,db,uid,password,model);
         Object[] objects = (Object[]) result;
+
         if (objects.length > 0) {
             for (Object object : objects) {
                 String image= OdooUtil.getString((Map<String, Object>) object, "image_128");
@@ -75,30 +77,52 @@ public class ContactFragment extends Fragment {
                 String  street =OdooUtil.getString((Map<String, Object>) object, "street");
                 String street2=OdooUtil.getString((Map<String, Object>) object, "street2");
                 Boolean is_company=OdooUtil.getBoolean((Map<String, Object>) object, "is_company");
-                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,zip,street,street2,id,is_company);
+                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,zip,street,street2,id);
                 contacts.add(contact);
-               // Log.d("TAG", "abc: "+contact.getStreet()+contact.getStreet2()+contact.getIs_company()+contact.getZip());
+             //   Log.d("TAG", "onCreateView: "+contact.getId());
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //xu ly listview truyen du lieu sang   FragmentDetailContact
+
         lvContact.setAdapter(new AdapterContact(getContext(), R.layout.item_contact_layout, contacts));
         lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent1 = new Intent(getContext(), DetailContactActivity.class);
-
-                intent1.putExtra("username",contacts.get(i).getName());
-                intent1.putExtra("image_128",contacts.get(i).getImage_128());
-                intent1.putExtra("email",contacts.get(i).getEmail());
-                intent1.putExtra("website",contacts.get(i).getWebsite());
-                intent1.putExtra("phone",contacts.get(i).getPhone());
-                intent1.putExtra("mobile",contacts.get(i).getMobile());
-//                intent1.putExtra("zip",contacts.get(i).getMobile());
-//                intent1.putExtra("street",contacts.get(i).getMobile());
-//                intent1.putExtra("street2",contacts.get(i).getMobile());
-//                intent1.putExtra("is_company",contacts.get(i).getIs_company());
-//                intent1.putExtra("city",contacts.get(i).getCity());
-
+                Bundle bundle = new Bundle();
+                bundle.putString("username",contacts.get(i).getName());
+                bundle.putString("image_128",contacts.get(i).getImage_1920());
+                bundle.putString("email",contacts.get(i).getEmail());
+                bundle.putString("website",contacts.get(i).getWebsite());
+                bundle.putString("phone",contacts.get(i).getPhone());
+                bundle.putString("mobile",contacts.get(i).getMobile());
+                bundle.putString("zip",contacts.get(i).getZip());
+                bundle.putString("street",contacts.get(i).getStreet());
+                bundle.putString("street2",contacts.get(i).getStreet2());
+               // bundle.putString("is_company",contacts.get(i).getIs_company());
+                bundle.putString("city",contacts.get(i).getCity());
+                bundle.putString("url",url);
+                bundle.putInt("uid",uid);
+                bundle.putString("password",password);
+                bundle.putString("db",db);
+                bundle.putInt("id",contacts.get(i).getId());
+                Log.d("TAG", "Image 142: "+contacts.get(i).getImage_1920());
+                intent1.putExtras(bundle);
 
                 startActivity(intent1);
             }
