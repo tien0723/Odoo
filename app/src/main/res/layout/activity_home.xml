@@ -37,4 +37,17 @@
         android:id="@+id/navigationView"
         app:headerLayout="@layout/menu_navigation_layout"
         android:layout_gravity="start"></com.google.android.material.navigation.NavigationView>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/frameLayout">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_add_24"
+        android:layout_marginTop="600dp"
+        android:layout_marginLeft="350dp"
+        android:id="@+id/btnAdd"/>
+
+</FrameLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

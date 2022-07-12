@@ -1,6 +1,5 @@
 package tdc.edu.vn.myodoo.Fragment;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -22,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.apache.xmlrpc.XmlRpcException;
+
 import java.io.IOException;
 
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
@@ -29,24 +30,21 @@ import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
 
-
-public class FragmentDetailContact extends Fragment {
-    //khoi tao
-    ImageView imageBackgroundUser, imageCamera, imageEdit;
-    TextView tvUserName;
+public class FragmentAddContact extends Fragment {
+    ImageView imageBackgroundUser, imageCamera;
+    TextView tvUserName,tvSave;
     EditText edtName, edtCountry, edtEmail, edtWebsite, edtPhone, edtMobile, edtStreet,
             edtStreet2, edtZip, edtInternalNote, edtCity, edtCompany;
     Bitmap bitmap;
     DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
-
-
+    String url,db,password;
+    int uid,id;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail_contact, container, false);
-        //Anh xa du lieu
+        View view = inflater.inflate(R.layout.fragment_add_contact,container,false);
         imageCamera = view.findViewById(R.id.imageCamera);
-        imageEdit = view.findViewById(R.id.imageEdit);
+        tvSave= view.findViewById(R.id.tvSave);
         tvUserName = view.findViewById(R.id.tvUserName);
         imageBackgroundUser = view.findViewById(R.id.imageBackgroundUser);
         edtName = view.findViewById(R.id.edtName);
@@ -61,9 +59,7 @@ public class FragmentDetailContact extends Fragment {
         edtCity = view.findViewById(R.id.edtCity);
         edtZip = view.findViewById(R.id.edtZip);
         edtInternalNote = view.findViewById(R.id.edtInternalNote);
-        ////////////
-        getInfo();
-        //lay hinh anh tu intent
+
         ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -80,8 +76,7 @@ public class FragmentDetailContact extends Fragment {
                         }
                     }
                 });
-
-        ////////////////////
+        getInfo();
         imageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,45 +95,22 @@ public class FragmentDetailContact extends Fragment {
     //lay thong tin tu ContactFragment
     public void getInfo() {
         //get intent
-        Intent intent = getActivity().getIntent();
-        String url = intent.getStringExtra("url");
-        String db = intent.getStringExtra("db");
-        String password = intent.getStringExtra("password");
-        int uid = intent.getIntExtra("uid", 0);
-        int id = intent.getIntExtra("id", 0);
-        String name = intent.getStringExtra("username");
-        String image = intent.getStringExtra("image_128");
-        String company = intent.getStringExtra("company");
-        String street = intent.getStringExtra("street");
-        String street2 = intent.getStringExtra("street2");
-        String country = intent.getStringExtra("country");
-        String email = intent.getStringExtra("email");
-        String website = intent.getStringExtra("website");
-        String phone = intent.getStringExtra("phone");
-        String mobile = intent.getStringExtra("mobile");
-        String zip = intent.getStringExtra("zip");
-        String city = intent.getStringExtra("city");
-        ////////////////////////////////////////
-        tvUserName.setText(name);
-        imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image));
-        edtName.setText(name);
-        edtCompany.setText(company);
-        edtStreet.setText(street);
-        edtStreet2.setText(street2);
-        edtCountry.setText(country);
-        edtEmail.setText(email);
-        edtWebsite.setText(website);
-        edtPhone.setText(phone);
-        edtMobile.setText(mobile);
-        edtZip.setText(zip);
-        edtCity.setText(city);
-        ////////////////////////////////////
-        imageEdit.setOnClickListener(new View.OnClickListener() {
+       Intent intent = getActivity().getIntent();
+
+           url = intent.getStringExtra("url");
+           db = intent.getStringExtra("db");
+           password = intent.getStringExtra("password");
+           uid = intent.getIntExtra("uid",0);
+           id = intent.getIntExtra("id",0);
+
+        Log.d("TAG", "getInfo: "+url+db+password+uid);
+
+        tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (bitmap != null) {
+                if(bitmap!=null){
                     String image = BitmapUtils.conVert(bitmap);
-                    Log.d("TAG", "imageBitmap: " + image);
+                    Log.d("TAG", "imageBitmap: "+image);
 
                     Contact contact = new Contact(
                             edtCity.getText().toString(),
@@ -150,44 +122,17 @@ public class FragmentDetailContact extends Fragment {
                             edtMobile.getText().toString(),
                             edtZip.getText().toString(),
                             edtStreet.getText().toString(),
-                            edtStreet2.getText().toString(), id);
-                  if(dataBaseHomeOdoo.updateContact(url, db, password, uid, contact)!=null){
-                      dataBaseHomeOdoo.updateContact(url, db, password, uid, contact);
-                  }else {
-                      Toast.makeText(getActivity(), "Error update null", Toast.LENGTH_LONG).show();
-                  }
-                } else {
-                    Toast.makeText(getActivity(), "Loi chua chon anh", Toast.LENGTH_LONG).show();
+                            edtStreet2.getText().toString());
+                      if(  dataBaseHomeOdoo.addContact(url,db,password,uid,contact)!=0){
+                          dataBaseHomeOdoo.addContact(url,db,password,uid,contact);
+                      }else {
+                          Log.d("TAG", "Loi them contact : ");
+                      }
+                }else {
+                    Toast.makeText(getActivity(),"Loi chua chon anh",Toast.LENGTH_LONG).show();
                     Log.d("TAG", "loi chua chon anh: ");
                 }
             }
         });
     }
-
-
-    //Xu ly su kien click chuot
-    //   @Override
-//    public void onClick(View view) {
-//        switch (view.getId()){
-//            case R.id.tvEmail:
-//                String dialEmail = "mailto:" + tvEmail.getText().toString();
-//                startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(dialEmail)));
-//                break;
-//            case R.id.tvPhone:
-//                String dial = "tel:" + tvPhone.getText().toString();
-//                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial)));
-//                break;
-//            case R.id.tvMobile:
-//                String dial1 = "tel:" + tvMobile.getText().toString();
-//                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial1)));
-//                break;
-//            case R.id.tvWebsite:
-//                String wed = tvWebsite.getText().toString();
-//                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH );
-//                intent.putExtra(SearchManager.QUERY, wed);
-//                startActivity(intent);
-//                break;
-//        }
-//    }
-
 }

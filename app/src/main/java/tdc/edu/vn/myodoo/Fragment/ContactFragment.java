@@ -121,7 +121,8 @@ public class ContactFragment extends Fragment {
                 bundle.putString("password",password);
                 bundle.putString("db",db);
                 bundle.putInt("id",contacts.get(i).getId());
-                Log.d("TAG", "Image 142: "+contacts.get(i).getImage_1920());
+                bundle.putString("edit","edit");
+              //  Log.d("TAG", "Image 142: "+contacts.get(i).getImage_1920());
                 intent1.putExtras(bundle);
 
                 startActivity(intent1);

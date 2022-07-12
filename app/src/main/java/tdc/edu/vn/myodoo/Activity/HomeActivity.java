@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Map;
@@ -37,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private static final int FRAGMENT_SETTING = 2;
     //tao bien so sanh de lay fragment
     private int mCurrentFragment = FRAGMENT_CONTACT;
-
+    FloatingActionButton btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView tvEmail = navigationView.getHeaderView(0).findViewById(R.id.tvEmailNavigation);
         ImageView imageView = navigationView.getHeaderView(0).findViewById(R.id.imgUserNavigation);
         Toolbar toolbar = findViewById(R.id.toolBar);
+        btnAdd = findViewById(R.id.btnAdd);
         //Su ly thanh toolbar
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,
@@ -85,6 +90,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 tvName.setText(name);
             }
         }
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(HomeActivity.this,DetailContactActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("url",url);
+                bundle.putInt("uid",uid);
+                bundle.putString("password",password);
+                bundle.putString("db",db);
+                intent1.putExtras(bundle);
+                startActivity(intent1);
+            }
+        });
 
     }
     //xu ly thanh navigation de chon fragment

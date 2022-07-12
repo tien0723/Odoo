@@ -3,22 +3,13 @@ package tdc.edu.vn.myodoo.DataBase;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Types;
-
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import tdc.edu.vn.myodoo.Model.Contact;
@@ -119,10 +110,39 @@ public class DataBaseHomeOdoo {
         return models;
     }
 
-    //Update
-    public Object updateContact( String url,String db,String password,int uid,Contact contact) {
+    //Add
+    public int addContact(String url, String db, String password, int uid, Contact contact){
         XmlRpcClient models = Model(url);
-        Object update=null;
+        int id = 0;
+        try {
+            id = (Integer) models.execute("execute_kw", asList(
+                    db, uid, password,
+                    "res.partner", "create",
+                    asList(new HashMap() {{
+                               put("image_1920", contact.getImage_1920());
+                               put("name", contact.getName());
+                               put("street", contact.getStreet());
+                               put("street2", contact.getStreet2());
+                               put("zip", contact.getZip());
+                               put("city", contact.getCity());
+                               put("email", contact.getEmail());
+                               put("website", contact.getWebsite());
+                               put("phone", contact.getPhone());
+                               put("mobile", contact.getMobile());
+
+                           }}
+                    )
+            ));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    //Update
+    public Object updateContact(String url, String db, String password, int uid, Contact contact) {
+        XmlRpcClient models = Model(url);
+        Object update = null;
         try {
             models.execute("execute_kw", asList(
                     db, uid, password,
@@ -130,22 +150,22 @@ public class DataBaseHomeOdoo {
                     asList(
                             asList(contact.getId()),
                             new HashMap() {{
-                                put("image_1920",contact.getImage_1920());
+                                put("image_1920", contact.getImage_1920());
                                 put("name", contact.getName());
                                 put("street", contact.getStreet());
                                 put("street2", contact.getStreet2());
                                 put("zip", contact.getZip());
                                 put("city", contact.getCity());
-                                put("email",contact.getEmail());
-                                put("website",contact.getWebsite());
-                                put("phone",contact.getPhone());
-                                put("mobile",contact.getMobile());
+                                put("email", contact.getEmail());
+                                put("website", contact.getWebsite());
+                                put("phone", contact.getPhone());
+                                put("mobile", contact.getMobile());
 
                             }}
                     )
             ));
             // get record name after having changed it
-            update = asList((Object[])models.execute("execute_kw", asList(
+            update = asList((Object[]) models.execute("execute_kw", asList(
                     db, uid, password,
                     "res.partner", "name_get",
                     asList(asList(contact.getId()))
