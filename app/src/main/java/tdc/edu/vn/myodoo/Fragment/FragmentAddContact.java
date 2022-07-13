@@ -95,13 +95,14 @@ public class FragmentAddContact extends Fragment {
     //lay thong tin tu ContactFragment
     public void getInfo() {
         //get intent
-       Intent intent = getActivity().getIntent();
+       Bundle bundle = getActivity().getIntent().getExtras();
 
-           url = intent.getStringExtra("url");
-           db = intent.getStringExtra("db");
-           password = intent.getStringExtra("password");
-           uid = intent.getIntExtra("uid",0);
-           id = intent.getIntExtra("id",0);
+         if(bundle!=null){
+             url = bundle.getString("url");
+             db = bundle.getString("db");
+             password = bundle.getString("password");
+             uid = bundle.getInt("uid",0);
+         }
 
         Log.d("TAG", "getInfo: "+url+db+password+uid);
 

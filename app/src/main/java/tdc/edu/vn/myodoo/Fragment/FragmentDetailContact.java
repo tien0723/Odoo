@@ -107,7 +107,7 @@ public class FragmentDetailContact extends Fragment {
         int uid = intent.getIntExtra("uid", 0);
         int id = intent.getIntExtra("id", 0);
         String name = intent.getStringExtra("username");
-        String image = intent.getStringExtra("image_128");
+        String image123 = intent.getStringExtra("image_128");
         String company = intent.getStringExtra("company");
         String street = intent.getStringExtra("street");
         String street2 = intent.getStringExtra("street2");
@@ -120,7 +120,7 @@ public class FragmentDetailContact extends Fragment {
         String city = intent.getStringExtra("city");
         ////////////////////////////////////////
         tvUserName.setText(name);
-        imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image));
+        imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image123));
         edtName.setText(name);
         edtCompany.setText(company);
         edtStreet.setText(street);
@@ -157,8 +157,25 @@ public class FragmentDetailContact extends Fragment {
                       Toast.makeText(getActivity(), "Error update null", Toast.LENGTH_LONG).show();
                   }
                 } else {
-                    Toast.makeText(getActivity(), "Loi chua chon anh", Toast.LENGTH_LONG).show();
-                    Log.d("TAG", "loi chua chon anh: ");
+                   // String image1 = BitmapUtils.conVert(image123);
+                    Log.d("TAG", "imageBitmap: " + image123);
+
+                    Contact contact = new Contact(
+                            edtCity.getText().toString(),
+                            edtName.getText().toString(),
+                            edtEmail.getText().toString(),
+                            image123,
+                            edtWebsite.getText().toString(),
+                            edtPhone.getText().toString(),
+                            edtMobile.getText().toString(),
+                            edtZip.getText().toString(),
+                            edtStreet.getText().toString(),
+                            edtStreet2.getText().toString(), id);
+                    if(dataBaseHomeOdoo.updateContact(url, db, password, uid, contact)!=null){
+                        dataBaseHomeOdoo.updateContact(url, db, password, uid, contact);
+                    }else {
+                        Toast.makeText(getActivity(), "Error update null", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

@@ -26,6 +26,7 @@ import java.util.Map;
 
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Fragment.ContactFragment;
+import tdc.edu.vn.myodoo.Fragment.FragmentAddContact;
 import tdc.edu.vn.myodoo.Fragment.MessegesFragment;
 import tdc.edu.vn.myodoo.Fragment.SettingFragment;
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
@@ -79,8 +80,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             for (Object object: result){
                 String name = OdooUtil.getString((Map<String, Object>) object,"name");
                 String email = OdooUtil.getString((Map<String, Object>) object,"email");
-                String image = OdooUtil.getString((Map<String, Object>) object,"image_128");
-                Log.d("TAG", "image: "+image);
+                String image = OdooUtil.getString((Map<String, Object>) object,"image_1920");
+               // Log.d("TAG", "image: "+image);
                 if(image.equals("")){
                     imageView.setImageResource(R.drawable.user_defaul);
                 }else {
@@ -93,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(HomeActivity.this,DetailContactActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, DetailContactActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("url",url);
                 bundle.putInt("uid",uid);
@@ -114,12 +115,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if (mCurrentFragment != FRAGMENT_MESSAGES) {
                     replaceFragment(new MessegesFragment());
                     mCurrentFragment = FRAGMENT_MESSAGES;
+                    btnAdd.setVisibility(View.GONE);
                 }
                 break;
             case R.id.menuContact:
                 if (mCurrentFragment != FRAGMENT_CONTACT) {
                     replaceFragment(new ContactFragment());
                     mCurrentFragment = FRAGMENT_CONTACT;
+                    btnAdd.setVisibility(View.VISIBLE);
                 }
                 break;
 
