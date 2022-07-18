@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -24,7 +23,6 @@ import androidx.fragment.app.Fragment;
 
 import java.io.IOException;
 
-import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
@@ -32,12 +30,14 @@ import tdc.edu.vn.myodoo.R;
 
 public class FragmentDetailContact extends Fragment {
     //khoi tao
-    ImageView imageBackgroundUser, imageCamera, imageEdit;
+    ImageView imageBackgroundUser, imageCamera;
     TextView tvUserName;
     EditText edtName, edtCountry, edtEmail, edtWebsite, edtPhone, edtMobile, edtStreet,
             edtStreet2, edtZip, edtInternalNote, edtCity, edtCompany;
     Bitmap bitmap;
-    DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
+    private Contact contact;
+    int id;
+    String image123;
 
 
     @Nullable
@@ -46,7 +46,7 @@ public class FragmentDetailContact extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_contact, container, false);
         //Anh xa du lieu
         imageCamera = view.findViewById(R.id.imageCamera);
-        imageEdit = view.findViewById(R.id.imageEdit);
+        // imageEdit = view.findViewById(R.id.imageEdit);
         tvUserName = view.findViewById(R.id.tvUserName);
         imageBackgroundUser = view.findViewById(R.id.imageBackgroundUser);
         edtName = view.findViewById(R.id.edtName);
@@ -63,7 +63,7 @@ public class FragmentDetailContact extends Fragment {
         edtInternalNote = view.findViewById(R.id.edtInternalNote);
         ////////////
         getInfo();
-        //lay hinh anh tu intent
+        //lay hinh anh tu thu vien va set vao imageview
         ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -81,7 +81,7 @@ public class FragmentDetailContact extends Fragment {
                     }
                 });
 
-        ////////////////////
+        //chon anh tu thu vien
         imageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,13 +101,9 @@ public class FragmentDetailContact extends Fragment {
     public void getInfo() {
         //get intent
         Intent intent = getActivity().getIntent();
-        String url = intent.getStringExtra("url");
-        String db = intent.getStringExtra("db");
-        String password = intent.getStringExtra("password");
-        int uid = intent.getIntExtra("uid", 0);
-        int id = intent.getIntExtra("id", 0);
+        id = intent.getIntExtra("id", 1);
         String name = intent.getStringExtra("username");
-        String image123 = intent.getStringExtra("image_128");
+        image123 = intent.getStringExtra("image_128");
         String company = intent.getStringExtra("company");
         String street = intent.getStringExtra("street");
         String street2 = intent.getStringExtra("street2");
@@ -118,7 +114,7 @@ public class FragmentDetailContact extends Fragment {
         String mobile = intent.getStringExtra("mobile");
         String zip = intent.getStringExtra("zip");
         String city = intent.getStringExtra("city");
-        ////////////////////////////////////////
+
         tvUserName.setText(name);
         imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image123));
         edtName.setText(name);
@@ -132,55 +128,44 @@ public class FragmentDetailContact extends Fragment {
         edtMobile.setText(mobile);
         edtZip.setText(zip);
         edtCity.setText(city);
-        ////////////////////////////////////
-        imageEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (bitmap != null) {
-                    String image = BitmapUtils.conVert(bitmap);
-                    Log.d("TAG", "imageBitmap: " + image);
 
-                    Contact contact = new Contact(
-                            edtCity.getText().toString(),
-                            edtName.getText().toString(),
-                            edtEmail.getText().toString(),
-                            image,
-                            edtWebsite.getText().toString(),
-                            edtPhone.getText().toString(),
-                            edtMobile.getText().toString(),
-                            edtZip.getText().toString(),
-                            edtStreet.getText().toString(),
-                            edtStreet2.getText().toString(), id);
-                  if(dataBaseHomeOdoo.updateContact(url, db, password, uid, contact)!=null){
-                      dataBaseHomeOdoo.updateContact(url, db, password, uid, contact);
-                  }else {
-                      Toast.makeText(getActivity(), "Error update null", Toast.LENGTH_LONG).show();
-                  }
-                } else {
-                   // String image1 = BitmapUtils.conVert(image123);
-                    Log.d("TAG", "imageBitmap: " + image123);
-
-                    Contact contact = new Contact(
-                            edtCity.getText().toString(),
-                            edtName.getText().toString(),
-                            edtEmail.getText().toString(),
-                            image123,
-                            edtWebsite.getText().toString(),
-                            edtPhone.getText().toString(),
-                            edtMobile.getText().toString(),
-                            edtZip.getText().toString(),
-                            edtStreet.getText().toString(),
-                            edtStreet2.getText().toString(), id);
-                    if(dataBaseHomeOdoo.updateContact(url, db, password, uid, contact)!=null){
-                        dataBaseHomeOdoo.updateContact(url, db, password, uid, contact);
-                    }else {
-                        Toast.makeText(getActivity(), "Error update null", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
     }
 
+    //lay contact edit
+    public Contact getContactEdit() {
+        if (bitmap != null) {
+            String image = BitmapUtils.conVert(bitmap);
+            Log.d("TAG", "imageBitmap1: " + image);
+
+            contact = new Contact(
+                    edtCity.getText().toString(),
+                    edtName.getText().toString(),
+                    edtEmail.getText().toString(),
+                    image,
+                    edtWebsite.getText().toString(),
+                    edtPhone.getText().toString(),
+                    edtMobile.getText().toString(),
+                    edtZip.getText().toString(),
+                    edtStreet.getText().toString(),
+                    edtStreet2.getText().toString(), id);
+        } else {
+            // String image1 = BitmapUtils.conVert(image123);
+            Log.d("TAG", "imageBitmap2: " + image123);
+            contact = new Contact(
+                    edtCity.getText().toString(),
+                    edtName.getText().toString(),
+                    edtEmail.getText().toString(),
+                    image123,
+                    edtWebsite.getText().toString(),
+                    edtPhone.getText().toString(),
+                    edtMobile.getText().toString(),
+                    edtZip.getText().toString(),
+                    edtStreet.getText().toString(),
+                    edtStreet2.getText().toString(), id);
+
+        }
+        return contact;
+    }
 
     //Xu ly su kien click chuot
     //   @Override

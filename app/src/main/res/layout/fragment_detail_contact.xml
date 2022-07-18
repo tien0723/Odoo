@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/navigationDetail">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,20 +55,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageEdit"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0" />
 
-                <ImageView
-                    android:id="@+id/imageEdit"
-                    android:layout_width="55dp"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="215dp"
-                    android:src="@drawable/ic_baseline_create_24"
-                    app:layout_constraintBottom_toTopOf="@+id/imageCamera"
-                    app:layout_constraintEnd_toEndOf="@+id/imageBackgroundUser"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
