@@ -60,7 +60,8 @@ public class DataBaseHomeOdoo {
     public Object listContact(String url, String db, int user_id, String password, String objectModel) {
         Map<String, Object> fields = new HashMap() {{
             put("fields", asList("image_128", "name", "city",
-                    "email", "website", "phone", "mobile", "street", "street2", "zip", "is_company"));
+                    "email", "website", "phone", "mobile", "street",
+                    "street2", "zip", "is_company","company_id","parent_id"));//3
         }};
         //InternalNote,"country_id","company_id"
         XmlRpcClient models = Model(url);
@@ -129,6 +130,7 @@ public class DataBaseHomeOdoo {
                                put("website", contact.getWebsite());
                                put("phone", contact.getPhone());
                                put("mobile", contact.getMobile());
+                               put("is_company", contact.getIs_company());
 
                            }}
                     )
@@ -160,6 +162,7 @@ public class DataBaseHomeOdoo {
                                 put("website", contact.getWebsite());
                                 put("phone", contact.getPhone());
                                 put("mobile", contact.getMobile());
+                                put("is_company", contact.getIs_company());
 
                             }}
                     )

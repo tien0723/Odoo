@@ -9,9 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,7 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
@@ -30,11 +36,14 @@ import tdc.edu.vn.myodoo.R;
 
 public class FragmentDetailContact extends Fragment {
     //khoi tao
-    ImageView imageBackgroundUser, imageCamera;
+    ImageView imageBackgroundUser, imageCamera, imageEdit;
     TextView tvUserName;
     EditText edtName, edtCountry, edtEmail, edtWebsite, edtPhone, edtMobile, edtStreet,
-            edtStreet2, edtZip, edtInternalNote, edtCity, edtCompany;
+            edtStreet2, edtZip, edtInternalNote, edtCity;
+    CheckBox checkBoxIsCompany;
     Bitmap bitmap;
+    ArrayList<String> listCompany;
+    Spinner spnCompany;
     private Contact contact;
     int id;
     String image123;
@@ -46,13 +55,12 @@ public class FragmentDetailContact extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_contact, container, false);
         //Anh xa du lieu
         imageCamera = view.findViewById(R.id.imageCamera);
-        // imageEdit = view.findViewById(R.id.imageEdit);
+       // imageEdit = view.findViewById(R.id.imageEdit);
         tvUserName = view.findViewById(R.id.tvUserName);
         imageBackgroundUser = view.findViewById(R.id.imageBackgroundUser);
         edtName = view.findViewById(R.id.edtName);
         edtPhone = view.findViewById(R.id.edtPhone);
         edtMobile = view.findViewById(R.id.edtMobile);
-        edtCompany = view.findViewById(R.id.edtCompany);
         edtStreet = view.findViewById(R.id.edtStreet);
         edtStreet2 = view.findViewById(R.id.edtStreet2);
         edtEmail = view.findViewById(R.id.edtEmail);
@@ -61,9 +69,11 @@ public class FragmentDetailContact extends Fragment {
         edtCity = view.findViewById(R.id.edtCity);
         edtZip = view.findViewById(R.id.edtZip);
         edtInternalNote = view.findViewById(R.id.edtInternalNote);
+        checkBoxIsCompany = view.findViewById(R.id.checkboxCompany);
+        spnCompany = view.findViewById(R.id.spnCompany);
         ////////////
         getInfo();
-        //lay hinh anh tu thu vien va set vao imageview
+        //lay hinh anh tu intent
         ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -81,7 +91,7 @@ public class FragmentDetailContact extends Fragment {
                     }
                 });
 
-        //chon anh tu thu vien
+        ////////////////////
         imageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,10 +111,9 @@ public class FragmentDetailContact extends Fragment {
     public void getInfo() {
         //get intent
         Intent intent = getActivity().getIntent();
-        id = intent.getIntExtra("id", 1);
+         id = intent.getIntExtra("id",1);
         String name = intent.getStringExtra("username");
-        image123 = intent.getStringExtra("image_128");
-        String company = intent.getStringExtra("company");
+         image123 = intent.getStringExtra("image_128");
         String street = intent.getStringExtra("street");
         String street2 = intent.getStringExtra("street2");
         String country = intent.getStringExtra("country");
@@ -114,11 +123,13 @@ public class FragmentDetailContact extends Fragment {
         String mobile = intent.getStringExtra("mobile");
         String zip = intent.getStringExtra("zip");
         String city = intent.getStringExtra("city");
-
+        Boolean is_company = intent.getBooleanExtra("is_company",false);
+        listCompany = intent.getStringArrayListExtra("company");
+        String company = intent.getStringExtra("parent_id");
+        ////////////////////////////////////////
         tvUserName.setText(name);
         imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image123));
         edtName.setText(name);
-        edtCompany.setText(company);
         edtStreet.setText(street);
         edtStreet2.setText(street2);
         edtCountry.setText(country);
@@ -128,10 +139,26 @@ public class FragmentDetailContact extends Fragment {
         edtMobile.setText(mobile);
         edtZip.setText(zip);
         edtCity.setText(city);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,listCompany);
+        spnCompany.setAdapter(adapter);
+      //  Log.d("TAG", "getList: "+listCompany.toArray().length);
+      //  Log.d("TAG", "getList: "+company);
+        for (int i=0;i<listCompany.toArray().length;i++){
+         Log.d("TAG", "abc: "+i);
+            if(listCompany.get(i).equals(company)){
+              //  Log.d("TAG", "deef: "+i);
+                spnCompany.setSelection(i);
+            }
+        }
+
+
+        if (is_company == true){
+            checkBoxIsCompany.setChecked(true);
+        }else {
+            checkBoxIsCompany.setChecked(false);
+        }
 
     }
-
-    //lay contact edit
     public Contact getContactEdit() {
         if (bitmap != null) {
             String image = BitmapUtils.conVert(bitmap);
@@ -147,11 +174,12 @@ public class FragmentDetailContact extends Fragment {
                     edtMobile.getText().toString(),
                     edtZip.getText().toString(),
                     edtStreet.getText().toString(),
-                    edtStreet2.getText().toString(), id);
+                    edtStreet2.getText().toString(), id,
+                    checkBoxIsCompany.isChecked());
         } else {
             // String image1 = BitmapUtils.conVert(image123);
             Log.d("TAG", "imageBitmap2: " + image123);
-            contact = new Contact(
+             contact = new Contact(
                     edtCity.getText().toString(),
                     edtName.getText().toString(),
                     edtEmail.getText().toString(),
@@ -161,11 +189,14 @@ public class FragmentDetailContact extends Fragment {
                     edtMobile.getText().toString(),
                     edtZip.getText().toString(),
                     edtStreet.getText().toString(),
-                    edtStreet2.getText().toString(), id);
+                    edtStreet2.getText().toString(), id,
+                     checkBoxIsCompany.isChecked());
 
         }
         return contact;
     }
+
+
 
     //Xu ly su kien click chuot
     //   @Override

@@ -34,6 +34,7 @@ import tdc.edu.vn.myodoo.Adapter.AdapterContact;
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.Many2One;
 import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 public class ContactFragment extends Fragment {
@@ -62,7 +63,7 @@ public class ContactFragment extends Fragment {
         //lay danh sach contact
         Object result = dataBaseHomeOdoo.listContact(url,db,uid,password,model);
         Object[] objects = (Object[]) result;
-
+        ArrayList<String> listCompany = new ArrayList<>();
         if (objects.length > 0) {
             for (Object object : objects) {
                 String image= OdooUtil.getString((Map<String, Object>) object, "image_128");
@@ -77,9 +78,15 @@ public class ContactFragment extends Fragment {
                 String  street =OdooUtil.getString((Map<String, Object>) object, "street");
                 String street2=OdooUtil.getString((Map<String, Object>) object, "street2");
                 Boolean is_company=OdooUtil.getBoolean((Map<String, Object>) object, "is_company");
-                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,zip,street,street2,id);
+                String parent_id= Many2One.getMany2One((Map<String, Object>) object, "parent_id").getName();
+                //2
+                if(is_company == true){
+                    listCompany.add(name);
+                }
+                Contact contact = new Contact(city,name,email,image,website_id,phone,mobile,zip,street,
+                        street2,id,listCompany,is_company,parent_id);
+                Log.d("TAG", "parent_id: "+contact.getParent_id());
                 contacts.add(contact);
-             //   Log.d("TAG", "onCreateView: "+contact.getId());
             }
         }
 
@@ -114,8 +121,11 @@ public class ContactFragment extends Fragment {
                 bundle.putString("zip",contacts.get(i).getZip());
                 bundle.putString("street",contacts.get(i).getStreet());
                 bundle.putString("street2",contacts.get(i).getStreet2());
-               // bundle.putString("is_company",contacts.get(i).getIs_company());
+                bundle.putBoolean("is_company",contacts.get(i).getIs_company());
+                bundle.putString("parent_id",contacts.get(i).getParent_id());
+                //1
                 bundle.putString("city",contacts.get(i).getCity());
+                bundle.putStringArrayList("company",contacts.get(i).getListCompany());
                 bundle.putString("url",url);
                 bundle.putInt("uid",uid);
                 bundle.putString("password",password);
