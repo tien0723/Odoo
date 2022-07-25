@@ -8,11 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,31 +23,40 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.apache.xmlrpc.XmlRpcException;
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
+import tdc.edu.vn.myodoo.Model.Company;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 public class FragmentAddContact extends Fragment {
+    //khoi tao
     ImageView imageBackgroundUser, imageCamera;
-    TextView tvUserName,tvSave;
+    TextView tvUserName, tvSave;
     EditText edtName, edtCountry, edtEmail, edtWebsite, edtPhone, edtMobile, edtStreet,
             edtStreet2, edtZip, edtInternalNote, edtCity;
     CheckBox checkBoxIsCompany;
+    Spinner spnCompany;
+    ArrayList<String> listCompany = new ArrayList<>();
     Bitmap bitmap;
-    String url,db,password;
-    int uid,id;
+    String url, db, password;
+    int uid, id;
     private Contact contact;
+    private  ArrayList<Company> listCOMPANY = new ArrayList<>();
+    private DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_contact,container,false);
+        View view = inflater.inflate(R.layout.fragment_add_contact, container, false);
+        //anh xa du lieu
         imageCamera = view.findViewById(R.id.imageCamera);
-        tvSave= view.findViewById(R.id.tvSave);
+        tvSave = view.findViewById(R.id.tvSave);
         tvUserName = view.findViewById(R.id.tvUserName);
         imageBackgroundUser = view.findViewById(R.id.imageBackgroundUser);
         edtName = view.findViewById(R.id.edtName);
@@ -61,7 +71,8 @@ public class FragmentAddContact extends Fragment {
         edtZip = view.findViewById(R.id.edtZip);
         edtInternalNote = view.findViewById(R.id.edtInternalNote);
         checkBoxIsCompany = view.findViewById(R.id.checkboxCompany);
-
+        spnCompany = view.findViewById(R.id.spnCompany);
+        //lay hinh anh tu intent
         ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -79,6 +90,7 @@ public class FragmentAddContact extends Fragment {
                     }
                 });
         getInfo();
+        //Xu ly nut camera lay hinh anh
         imageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +102,17 @@ public class FragmentAddContact extends Fragment {
                 resultLauncher.launch(intent);
             }
         });
+        //xu ly su kien click checkbox
+        checkBoxIsCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkBoxIsCompany.isChecked()==true){
+                    spnCompany.setVisibility(View.GONE);
+                }else {
+                    spnCompany.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         return view;
     }
@@ -97,53 +120,37 @@ public class FragmentAddContact extends Fragment {
     //lay thong tin tu ContactFragment
     public void getInfo() {
         //get intent
-       Bundle bundle = getActivity().getIntent().getExtras();
+        Intent intent = getActivity().getIntent();
 
-         if(bundle!=null){
-             url = bundle.getString("url");
-             db = bundle.getString("db");
-             password = bundle.getString("password");
-             uid = bundle.getInt("uid",0);
-         }
+        url = intent.getStringExtra("url");
+        db = intent.getStringExtra("db");
+        password = intent.getStringExtra("password");
+        uid = intent.getIntExtra("uid", 0);
+        listCompany = intent.getStringArrayListExtra("listCompany");
 
-        Log.d("TAG", "getInfo: "+url+db+password+uid);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listCompany);
+        spnCompany.setAdapter(adapter);
 
-//        tvSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(bitmap!=null){
-//                    String image = BitmapUtils.conVert(bitmap);
-//                    Log.d("TAG", "imageBitmap: "+image);
-//
-//                    Contact contact = new Contact(
-//                            edtCity.getText().toString(),
-//                            edtName.getText().toString(),
-//                            edtEmail.getText().toString(),
-//                            image,
-//                            edtWebsite.getText().toString(),
-//                            edtPhone.getText().toString(),
-//                            edtMobile.getText().toString(),
-//                            edtZip.getText().toString(),
-//                            edtStreet.getText().toString(),
-//                            edtStreet2.getText().toString());
-//                      if(  dataBaseHomeOdoo.addContact(url,db,password,uid,contact)!=0){
-//                          dataBaseHomeOdoo.addContact(url,db,password,uid,contact);
-//                      }else {
-//                          Log.d("TAG", "Loi them contact : ");
-//                      }
-//                }else {
-//                    Toast.makeText(getActivity(),"Loi chua chon anh",Toast.LENGTH_LONG).show();
-//                    Log.d("TAG", "loi chua chon anh: ");
-//                }
-//            }
-//        });
+        //lay danh sach contact tu database
+        Object result = dataBaseHomeOdoo.getIsCompany(url,db,password,uid);
+        Object[] objects = (Object[]) result;
+
+        if (objects.length > 0) {
+            for (Object object : objects) {
+                String name1= OdooUtil.getString((Map<String, Object>) object, "name");
+                int id1= OdooUtil.getInteger((Map<String, Object>) object, "id");
+                Company company =new Company(id1,name1);
+                listCOMPANY.add(company);
+            }
+        }
+
     }
+    //lay danh sach ContactADd
     public Contact getContactAdd() {
-        String image= "";
+        String image = "";
         if (bitmap != null) {
-             image = BitmapUtils.conVert(bitmap);
-            Log.d("TAG", "imageBitmap1: " + image);
-
+            image = BitmapUtils.conVert(bitmap);
+            //Log.d("TAG", "imageBitmap1: " + image);
         }
         contact = new Contact(
                 edtCity.getText().toString(),
@@ -156,8 +163,9 @@ public class FragmentAddContact extends Fragment {
                 edtZip.getText().toString(),
                 edtStreet.getText().toString(),
                 edtStreet2.getText().toString(), id,
-                checkBoxIsCompany.isChecked()
-                );
+                checkBoxIsCompany.isChecked(),
+                spnCompany.getSelectedItem().toString()
+        );
         return contact;
     }
 }

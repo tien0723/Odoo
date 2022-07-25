@@ -131,7 +131,7 @@ public class DataBaseHomeOdoo {
                                put("phone", contact.getPhone());
                                put("mobile", contact.getMobile());
                                put("is_company", contact.getIs_company());
-
+                               put("parent_id", contact.getParent_id());
                            }}
                     )
             ));
@@ -163,6 +163,7 @@ public class DataBaseHomeOdoo {
                                 put("phone", contact.getPhone());
                                 put("mobile", contact.getMobile());
                                 put("is_company", contact.getIs_company());
+                                put("parent_id", contact.getParent_id());
 
                             }}
                     )
@@ -177,5 +178,26 @@ public class DataBaseHomeOdoo {
             e.printStackTrace();
         }
         return update;
+    }
+    //lay danh sach is_company = true
+    public Object getIsCompany(String url ,String db,String password,int uid){
+        XmlRpcClient models = Model(url);
+        Object company = null;
+        try {
+            company = models.execute("execute_kw", asList(
+                    db, 8, password,
+                    "res.partner", "search_read",
+                    asList(asList(
+                            asList("is_company", "=", true))),
+                    new HashMap() {{
+                        put("fields", asList("name"));
+
+                    }}
+            ));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
+        }
+
+        return company;
     }
 }

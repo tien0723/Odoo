@@ -27,16 +27,20 @@ import androidx.fragment.app.Fragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
+import tdc.edu.vn.myodoo.Model.Company;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.Many2One;
+import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 
 public class FragmentDetailContact extends Fragment {
     //khoi tao
-    ImageView imageBackgroundUser, imageCamera, imageEdit;
+    ImageView imageBackgroundUser, imageCamera;
     TextView tvUserName;
     EditText edtName, edtCountry, edtEmail, edtWebsite, edtPhone, edtMobile, edtStreet,
             edtStreet2, edtZip, edtInternalNote, edtCity;
@@ -45,9 +49,11 @@ public class FragmentDetailContact extends Fragment {
     ArrayList<String> listCompany;
     Spinner spnCompany;
     private Contact contact;
-    int id;
-    String image123;
-
+    int id,uid;
+    String url,db,password,image123;
+    private DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
+    private ArrayList<Company> listCOMPANY =  new ArrayList<>();
+    private int parent_id;
 
     @Nullable
     @Override
@@ -55,7 +61,6 @@ public class FragmentDetailContact extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_contact, container, false);
         //Anh xa du lieu
         imageCamera = view.findViewById(R.id.imageCamera);
-       // imageEdit = view.findViewById(R.id.imageEdit);
         tvUserName = view.findViewById(R.id.tvUserName);
         imageBackgroundUser = view.findViewById(R.id.imageBackgroundUser);
         edtName = view.findViewById(R.id.edtName);
@@ -91,7 +96,7 @@ public class FragmentDetailContact extends Fragment {
                     }
                 });
 
-        ////////////////////
+        //Xu ly nut camera, lay hinh anh
         imageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,9 +116,14 @@ public class FragmentDetailContact extends Fragment {
     public void getInfo() {
         //get intent
         Intent intent = getActivity().getIntent();
-         id = intent.getIntExtra("id",1);
+         id = intent.getIntExtra("id",0);
+         uid = intent.getIntExtra("uid",0);
+        url = intent.getStringExtra("url");
+        db = intent.getStringExtra("db");
+        password = intent.getStringExtra("password");
         String name = intent.getStringExtra("username");
          image123 = intent.getStringExtra("image_128");
+
         String street = intent.getStringExtra("street");
         String street2 = intent.getStringExtra("street2");
         String country = intent.getStringExtra("country");
@@ -125,7 +135,7 @@ public class FragmentDetailContact extends Fragment {
         String city = intent.getStringExtra("city");
         Boolean is_company = intent.getBooleanExtra("is_company",false);
         listCompany = intent.getStringArrayListExtra("company");
-        String company = intent.getStringExtra("parent_id");
+        String parent_name = intent.getStringExtra("parent_name");
         ////////////////////////////////////////
         tvUserName.setText(name);
         imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image123));
@@ -144,25 +154,47 @@ public class FragmentDetailContact extends Fragment {
       //  Log.d("TAG", "getList: "+listCompany.toArray().length);
       //  Log.d("TAG", "getList: "+company);
         for (int i=0;i<listCompany.toArray().length;i++){
-         Log.d("TAG", "abc: "+i);
-            if(listCompany.get(i).equals(company)){
+         //Log.d("TAG", "abc: "+i);
+            if(listCompany.get(i).equals(parent_name)){
               //  Log.d("TAG", "deef: "+i);
                 spnCompany.setSelection(i);
             }
         }
-
-
+        //kiem tra checkbox
         if (is_company == true){
             checkBoxIsCompany.setChecked(true);
+            spnCompany.setVisibility(View.GONE);
         }else {
             checkBoxIsCompany.setChecked(false);
+            spnCompany.setVisibility(View.VISIBLE);
+        }
+
+        //lay danh sach contact
+        Object result = dataBaseHomeOdoo.getIsCompany(url,db,password,uid);
+        Object[] objects = (Object[]) result;
+
+        if (objects.length > 0) {
+            for (Object object : objects) {
+                 String name1= OdooUtil.getString((Map<String, Object>) object, "name");
+                int id1= OdooUtil.getInteger((Map<String, Object>) object, "id");
+                Company company =new Company(id1,name1);
+                listCOMPANY.add(company);
+            }
         }
 
     }
+    //lay danh sach ContactEdit
     public Contact getContactEdit() {
+        for (int i=0;i<listCOMPANY.toArray().length;i++){
+            //Log.d("TAG", "abc: "+i);
+            if(listCOMPANY.get(i).getName().equals(spnCompany.getSelectedItem().toString())){
+               parent_id = listCOMPANY.get(i).getId();
+                Log.d("TAG", "getContactEdit: "+parent_id);
+            }
+        }
         if (bitmap != null) {
             String image = BitmapUtils.conVert(bitmap);
-            Log.d("TAG", "imageBitmap1: " + image);
+            //Log.d("TAG", "imageBitmap1: " + image);
 
             contact = new Contact(
                     edtCity.getText().toString(),
@@ -175,10 +207,11 @@ public class FragmentDetailContact extends Fragment {
                     edtZip.getText().toString(),
                     edtStreet.getText().toString(),
                     edtStreet2.getText().toString(), id,
-                    checkBoxIsCompany.isChecked());
+                    checkBoxIsCompany.isChecked(),
+                    parent_id);
         } else {
             // String image1 = BitmapUtils.conVert(image123);
-            Log.d("TAG", "imageBitmap2: " + image123);
+           // Log.d("TAG", "imageBitmap2: " + image123);
              contact = new Contact(
                     edtCity.getText().toString(),
                     edtName.getText().toString(),
@@ -190,9 +223,11 @@ public class FragmentDetailContact extends Fragment {
                     edtZip.getText().toString(),
                     edtStreet.getText().toString(),
                     edtStreet2.getText().toString(), id,
-                     checkBoxIsCompany.isChecked());
+                     checkBoxIsCompany.isChecked(),
+                   parent_id);
 
         }
+
         return contact;
     }
 

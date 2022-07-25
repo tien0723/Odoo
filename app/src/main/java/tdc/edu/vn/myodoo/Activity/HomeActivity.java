@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import tdc.edu.vn.myodoo.DataBase.DataBaseHomeOdoo;
@@ -30,7 +31,9 @@ import tdc.edu.vn.myodoo.Fragment.FragmentAddContact;
 import tdc.edu.vn.myodoo.Fragment.MessegesFragment;
 import tdc.edu.vn.myodoo.Fragment.SettingFragment;
 import tdc.edu.vn.myodoo.Handle.BitmapUtils;
+import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
+import tdc.edu.vn.myodoo.Util.Many2One;
 import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //tao bien so sanh de lay fragment
     private int mCurrentFragment = FRAGMENT_CONTACT;
     FloatingActionButton btnAdd;
+    ArrayList<String> listCompany = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String password = intent.getStringExtra("password");
         int uid = intent.getIntExtra("uid",0);
 
+
         //hien thi thong tin user
         Object[] result = (Object[]) dataBaseHomeOdoo.InfoUser(url,db,password,uid);
         if(result.length >0){
@@ -91,6 +96,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 tvName.setText(name);
             }
         }
+
+        //lay danh sach contact
+        String model = "res.partner";
+        Object result1 = dataBaseHomeOdoo.listContact(url,db,uid,password,model);
+        Object[] objects = (Object[]) result1;
+
+        if (objects.length > 0) {
+            for (Object object : objects) {
+                String name= OdooUtil.getString((Map<String, Object>) object, "name");
+                Boolean is_company=OdooUtil.getBoolean((Map<String, Object>) object, "is_company");//2
+                if(is_company == true){
+                    listCompany.add(name);
+                }
+            }
+        }
+        //nut button add
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,8 +121,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putInt("uid",uid);
                 bundle.putString("password",password);
                 bundle.putString("db",db);
+                bundle.putStringArrayList("listCompany",listCompany);
                 intent1.putExtras(bundle);
-                startActivity(intent1);
+               startActivity(intent1);
             }
         });
 
