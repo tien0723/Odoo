@@ -1,7 +1,9 @@
 package tdc.edu.vn.myodoo.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +21,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -47,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private int mCurrentFragment = FRAGMENT_CONTACT;
     FloatingActionButton btnAdd;
     ArrayList<String> listCompany = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +168,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    //loading
+
+
 
     //xu ly su kien back
     @Override
@@ -180,4 +189,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         transaction.replace(R.id.content_frame, fragment);
         transaction.commit();
     }
+
+
 }

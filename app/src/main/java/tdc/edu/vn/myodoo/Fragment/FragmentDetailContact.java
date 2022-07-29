@@ -1,8 +1,10 @@
 package tdc.edu.vn.myodoo.Fragment;
 
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -15,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -34,11 +35,10 @@ import tdc.edu.vn.myodoo.Handle.BitmapUtils;
 import tdc.edu.vn.myodoo.Model.Company;
 import tdc.edu.vn.myodoo.Model.Contact;
 import tdc.edu.vn.myodoo.R;
-import tdc.edu.vn.myodoo.Util.Many2One;
 import tdc.edu.vn.myodoo.Util.OdooUtil;
 
 
-public class FragmentDetailContact extends Fragment {
+public class FragmentDetailContact extends Fragment implements View.OnLongClickListener {
     //khoi tao
     ImageView imageBackgroundUser, imageCamera;
     TextView tvUserName;
@@ -49,10 +49,10 @@ public class FragmentDetailContact extends Fragment {
     ArrayList<String> listCompany;
     Spinner spnCompany;
     private Contact contact;
-    int id,uid;
-    String url,db,password,image123;
+    int id, uid;
+    String url, db, password, image123;
     private DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
-    private ArrayList<Company> listCOMPANY =  new ArrayList<>();
+    private ArrayList<Company> listCOMPANY = new ArrayList<>();
     private int parent_id;
 
     @Nullable
@@ -76,7 +76,11 @@ public class FragmentDetailContact extends Fragment {
         edtInternalNote = view.findViewById(R.id.edtInternalNote);
         checkBoxIsCompany = view.findViewById(R.id.checkboxCompany);
         spnCompany = view.findViewById(R.id.spnCompany);
-        ////////////
+        //su kien longclick
+        edtEmail.setOnLongClickListener(this);
+        edtMobile.setOnLongClickListener(this);
+        edtPhone.setOnLongClickListener(this);
+        edtWebsite.setOnLongClickListener(this);
         getInfo();
         //lay hinh anh tu intent
         ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -116,14 +120,13 @@ public class FragmentDetailContact extends Fragment {
     public void getInfo() {
         //get intent
         Intent intent = getActivity().getIntent();
-         id = intent.getIntExtra("id",0);
-         uid = intent.getIntExtra("uid",0);
+        id = intent.getIntExtra("id", 0);
+        uid = intent.getIntExtra("uid", 0);
         url = intent.getStringExtra("url");
         db = intent.getStringExtra("db");
         password = intent.getStringExtra("password");
         String name = intent.getStringExtra("username");
-         image123 = intent.getStringExtra("image_128");
-
+        image123 = intent.getStringExtra("image_128");
         String street = intent.getStringExtra("street");
         String street2 = intent.getStringExtra("street2");
         String country = intent.getStringExtra("country");
@@ -133,10 +136,10 @@ public class FragmentDetailContact extends Fragment {
         String mobile = intent.getStringExtra("mobile");
         String zip = intent.getStringExtra("zip");
         String city = intent.getStringExtra("city");
-        Boolean is_company = intent.getBooleanExtra("is_company",false);
+        Boolean is_company = intent.getBooleanExtra("is_company", false);
         listCompany = intent.getStringArrayListExtra("company");
         String parent_name = intent.getStringExtra("parent_name");
-        ////////////////////////////////////////
+        // set du leiu
         tvUserName.setText(name);
         imageBackgroundUser.setImageBitmap(BitmapUtils.getBitmapImage(getActivity(), image123));
         edtName.setText(name);
@@ -149,53 +152,49 @@ public class FragmentDetailContact extends Fragment {
         edtMobile.setText(mobile);
         edtZip.setText(zip);
         edtCity.setText(city);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,listCompany);
+        //adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, listCompany);
         spnCompany.setAdapter(adapter);
-      //  Log.d("TAG", "getList: "+listCompany.toArray().length);
-      //  Log.d("TAG", "getList: "+company);
-        for (int i=0;i<listCompany.toArray().length;i++){
-         //Log.d("TAG", "abc: "+i);
-            if(listCompany.get(i).equals(parent_name)){
-              //  Log.d("TAG", "deef: "+i);
+        //lay company cua khach hang
+        for (int i = 0; i < listCompany.toArray().length; i++) {
+            if (listCompany.get(i).equals(parent_name)) {
                 spnCompany.setSelection(i);
             }
         }
         //kiem tra checkbox
-        if (is_company == true){
+        if (is_company == true) {
             checkBoxIsCompany.setChecked(true);
             spnCompany.setVisibility(View.GONE);
-        }else {
+        } else {
             checkBoxIsCompany.setChecked(false);
             spnCompany.setVisibility(View.VISIBLE);
         }
-
         //lay danh sach contact
-        Object result = dataBaseHomeOdoo.getIsCompany(url,db,password,uid);
+        Object result = dataBaseHomeOdoo.getIsCompany(url, db, password, uid);
         Object[] objects = (Object[]) result;
 
         if (objects.length > 0) {
             for (Object object : objects) {
-                 String name1= OdooUtil.getString((Map<String, Object>) object, "name");
-                int id1= OdooUtil.getInteger((Map<String, Object>) object, "id");
-                Company company =new Company(id1,name1);
+                String name1 = OdooUtil.getString((Map<String, Object>) object, "name");
+                int id1 = OdooUtil.getInteger((Map<String, Object>) object, "id");
+                Company company = new Company(id1, name1);
                 listCOMPANY.add(company);
             }
         }
-
     }
+
     //lay danh sach ContactEdit
     public Contact getContactEdit() {
-        for (int i=0;i<listCOMPANY.toArray().length;i++){
+        for (int i = 0; i < listCOMPANY.toArray().length; i++) {
             //Log.d("TAG", "abc: "+i);
-            if(listCOMPANY.get(i).getName().equals(spnCompany.getSelectedItem().toString())){
-               parent_id = listCOMPANY.get(i).getId();
-                Log.d("TAG", "getContactEdit: "+parent_id);
+            if (listCOMPANY.get(i).getName().equals(spnCompany.getSelectedItem().toString())) {
+                parent_id = listCOMPANY.get(i).getId();
+                Log.d("TAG", "getContactEdit: " + parent_id);
             }
         }
         if (bitmap != null) {
             String image = BitmapUtils.conVert(bitmap);
             //Log.d("TAG", "imageBitmap1: " + image);
-
             contact = new Contact(
                     edtCity.getText().toString(),
                     edtName.getText().toString(),
@@ -210,9 +209,8 @@ public class FragmentDetailContact extends Fragment {
                     checkBoxIsCompany.isChecked(),
                     parent_id);
         } else {
-            // String image1 = BitmapUtils.conVert(image123);
-           // Log.d("TAG", "imageBitmap2: " + image123);
-             contact = new Contact(
+            // Log.d("TAG", "imageBitmap2: " + image123);
+            contact = new Contact(
                     edtCity.getText().toString(),
                     edtName.getText().toString(),
                     edtEmail.getText().toString(),
@@ -223,39 +221,35 @@ public class FragmentDetailContact extends Fragment {
                     edtZip.getText().toString(),
                     edtStreet.getText().toString(),
                     edtStreet2.getText().toString(), id,
-                     checkBoxIsCompany.isChecked(),
-                   parent_id);
-
+                    checkBoxIsCompany.isChecked(),
+                    parent_id);
         }
-
         return contact;
     }
 
-
-
-    //Xu ly su kien click chuot
-    //   @Override
-//    public void onClick(View view) {
-//        switch (view.getId()){
-//            case R.id.tvEmail:
-//                String dialEmail = "mailto:" + tvEmail.getText().toString();
-//                startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(dialEmail)));
-//                break;
-//            case R.id.tvPhone:
-//                String dial = "tel:" + tvPhone.getText().toString();
-//                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial)));
-//                break;
-//            case R.id.tvMobile:
-//                String dial1 = "tel:" + tvMobile.getText().toString();
-//                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial1)));
-//                break;
-//            case R.id.tvWebsite:
-//                String wed = tvWebsite.getText().toString();
-//                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH );
-//                intent.putExtra(SearchManager.QUERY, wed);
-//                startActivity(intent);
-//                break;
-//        }
-//    }
-
+    //xu ly su kien nhan giu
+    @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()) {
+            case R.id.edtEmail:
+                String dialEmail = "mailto:" + edtEmail.getText().toString();
+                startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(dialEmail)));
+                break;
+            case R.id.edtPhone:
+                String tel = "tel:" + edtPhone.getText().toString();
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(tel)));
+                break;
+            case R.id.edtMobile:
+                String mobile = "tel:" + edtMobile.getText().toString();
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(mobile)));
+                break;
+            case R.id.edtWebsite:
+                String wed = edtWebsite.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, wed);
+                startActivity(intent);
+                break;
+        }
+        return true;
+    }
 }

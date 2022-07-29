@@ -34,4 +34,7 @@
     <string name="activities">Activities</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="okay">Ok</string>
 </resources>

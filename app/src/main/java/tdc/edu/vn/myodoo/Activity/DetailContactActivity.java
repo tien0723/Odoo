@@ -2,11 +2,16 @@ package tdc.edu.vn.myodoo.Activity;
 
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,18 +35,24 @@ public class DetailContactActivity extends AppCompatActivity {
     private int mCurrentFragment = FRAGMENT_ADD;
     DrawerLayout mDrawerLayout;
     NavigationView navigationView;
-    TextView tvSave;
+    TextView tvSave,tvBack;
     DataBaseHomeOdoo dataBaseHomeOdoo = new DataBaseHomeOdoo();
     private String url, password, db;
     private int uid;
+
+    TextView title,tvMess;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_contact);
+        //ánh xạ du lieu
         navigationView = findViewById(R.id.fragmentContact);
         mDrawerLayout = findViewById(R.id.drawerLayoutDetailContact);
         tvSave = findViewById(R.id.tvSave);
+        tvBack = findViewById(R.id.tvBack);
+        //lay intent
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         db = intent.getStringExtra("db");
@@ -62,6 +73,7 @@ public class DetailContactActivity extends AppCompatActivity {
         }
         //danh dau fragment duoc chon
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContact, selectFragment, fragment).commit();
+        //xu ly nut save
         tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,16 +82,22 @@ public class DetailContactActivity extends AppCompatActivity {
                 FragmentAddContact fragmentAddContact = (FragmentAddContact) getSupportFragmentManager().findFragmentByTag("add");
                 if (fragmentDetailContact != null && fragmentDetailContact.isVisible()) {
                     contact = fragmentDetailContact.getContactEdit();
-                    dataBaseHomeOdoo.updateContact(url, db, password, uid, contact);
-
+                    Log.d("TAG", "update thanh cong: ");
+                    showDialogUpdate("Ban co chac muon thay doi chinh sua",contact,url, db, password, uid);
                 } else if (fragmentAddContact != null && fragmentAddContact.isVisible()) {
                     contact = fragmentAddContact.getContactAdd();
-                    dataBaseHomeOdoo.addContact(url, db, password, uid, contact);
+                    Log.d("TAG", "them thanh cong: ");
+                    showDialogAdd("Ban co chac muon them mot contact",contact,url, db, password, uid);
                 }
-
             }
         });
-
+        //xu ly nut back
+        tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -90,5 +108,70 @@ public class DetailContactActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    //layout success
+    private void showDialogUpdate(String message, Contact contact,String url,String db,String password, int uid) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailContactActivity.this, R.style.AlertDialogTheme);
+        View view = LayoutInflater.from(DetailContactActivity.this).inflate(
+                R.layout.layout_success_dialog,
+                findViewById(R.id.layoutDialogContainer)
+        );
+        builder.setView(view);
+        title = view.findViewById(R.id.textTitle);
+        title.setText("Thong bao");
+        tvMess = view.findViewById(R.id.textMessage);
+        tvMess.setText(message);
+
+        ((TextView) view.findViewById(R.id.btnYes)).setText(getResources().getString(R.string.Yes));
+        ((TextView) view.findViewById(R.id.btnNo)).setText(getResources().getString(R.string.No));
+
+        final AlertDialog alertDialog = builder.create();
+
+        view.findViewById(R.id.btnYes).setOnClickListener(v -> {
+            alertDialog.dismiss();
+            dataBaseHomeOdoo.updateContact(url, db, password, uid, contact);
+
+        });
+        view.findViewById(R.id.btnNo).setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
+    }
+    private void showDialogAdd(String message, Contact contact,String url,String db,String password, int uid) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailContactActivity.this, R.style.AlertDialogTheme);
+        View view = LayoutInflater.from(DetailContactActivity.this).inflate(
+                R.layout.layout_success_dialog,
+                findViewById(R.id.layoutDialogContainer)
+        );
+        builder.setView(view);
+        title = view.findViewById(R.id.textTitle);
+        title.setText("Thong bao");
+        tvMess = view.findViewById(R.id.textMessage);
+        tvMess.setText(message);
+
+        ((TextView) view.findViewById(R.id.btnYes)).setText(getResources().getString(R.string.Yes));
+        ((TextView) view.findViewById(R.id.btnNo)).setText(getResources().getString(R.string.No));
+
+        final AlertDialog alertDialog = builder.create();
+
+        view.findViewById(R.id.btnYes).setOnClickListener(v -> {
+            alertDialog.dismiss();
+            dataBaseHomeOdoo.addContact(url, db, password, uid, contact);
+            //showSuccessDialog("Them thanh cong");
+
+        });
+        view.findViewById(R.id.btnNo).setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
     }
 }
